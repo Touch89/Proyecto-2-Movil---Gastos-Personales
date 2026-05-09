@@ -7,7 +7,7 @@ data class UserWithAccounts(
     @Embedded val user: User,
     @Relation(
         parentColumn = "id",
-        entityColumn = "user_id" //Se puede cambiar luego, depende de como se implemente
+        entityColumn = "user_id"
     )
     val accounts: List<Account>
 )
@@ -15,6 +15,9 @@ data class UserWithAccounts(
 @Dao
 interface AccountDao {
     @Transaction
-    @Query("SELECT * FROM accounts")
+    @Query("SELECT * FROM users")
     fun getUsersWithAccounts(): List<UserWithAccounts>
+    @Transaction
+    @Query("SELECT * FROM users WHERE id = :userId")
+    fun getAccountsFromUser(userId: Int): UserWithAccounts
 }

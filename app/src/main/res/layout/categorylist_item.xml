@@ -84,6 +84,7 @@
                 android:progressTint="@color/blue" />
 
             <TextView
+                android:id="@+id/item_textpercentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
