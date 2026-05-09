@@ -12,12 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/reallyLightGrey">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/orange"
             android:gravity="top"
             android:orientation="horizontal">
 
@@ -29,12 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:contentDescription="Regresar a la pantalla anterior"
-                android:minWidth="60dp" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:minWidth="40dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:background="@color/orange"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,8 +42,9 @@
                 android:maxWidth="280dp"
                 android:padding="20dp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:text="Reporte por categorías" />
+                android:textSize="22sp"
+                tools:text="Reporte por categorías"
+                android:text="Reporte por categorías"/>
 
             <Space
                 android:layout_width="0dp"
@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@color/white"
+            android:background="@color/reallyLightGrey"
             android:gravity="top"
             android:orientation="horizontal">
 
@@ -155,12 +155,12 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/orange"
             android:gravity="top"
             android:orientation="vertical">
 
@@ -170,7 +170,7 @@
                 android:layout_margin="10dp"
                 android:text="Lista de categorías"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"

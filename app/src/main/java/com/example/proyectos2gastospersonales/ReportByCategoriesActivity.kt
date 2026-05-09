@@ -1,21 +1,16 @@
 package com.example.proyectos2gastospersonales
 
-import android.health.connect.datatypes.units.Percentage
+import android.content.Intent
 import android.os.Bundle
-import android.util.Range
-import android.view.ContextMenu
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,30 +18,21 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.sql.Date
 import kotlin.Int
 import kotlin.String
 import kotlin.math.roundToInt
 
 data class CategoryData(val name: String, val amount: Int, val total: Float, val icon: Int)
 
-data class SelectedData(
-    val account: Int,
-    val type: String,
-    val year: Int,
-    val month: Int,
-    val user: Int
-)
-
 class CategoryAdapter(
     private val category: MutableList<CategoryData>,
-    val activity: AppCompatActivity
+    val activity: ReportByCategoriesActivity
 ) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     private var totalSum: Double = 0.0
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         private val itemCategory: TextView
         private val itemAmount: TextView
         private val itemTotal: TextView
@@ -82,8 +68,17 @@ class CategoryAdapter(
                     else -> R.drawable.ic_launcher_foreground
                 }
             )
+
+            view.setOnClickListener {
+                val intent = Intent(activity, MainActivity::class.java).apply {
+                }
+                intent.putExtra("category_name", category.name)
+                intent.putExtra("user_id", activity.idUser)
+                activity.startActivity(intent)
+            }
         }
     }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -110,7 +105,7 @@ class CategoryAdapter(
 
 class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private val userId = 1 //TEMPORAL
+    val idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
     private val accountId = 1 //TEMPORAL
     val db by lazy { AppDatabase.getDatabase(this) }
     private lateinit var rv: RecyclerView
@@ -145,7 +140,7 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
             insets
         }
 
-        val userAccounts = db.accountDao().getAccountsFromUser(userId)
+        val userAccounts = db.accountDao().getAccountsFromUser(idUser)
 
         val accountNameList = mutableListOf<String>()
 
@@ -234,22 +229,22 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
         if (selectedAccount == "Todas") {
             categoryAdapter.updateCategories(
                 db.categoryDao()
-                    .getCategoriesFromAllAccounts(userId, sTypeAsEnum, selectedMonth, selectedYear),
+                    .getCategoriesFromAllAccounts(idUser, sTypeAsEnum, selectedMonth, selectedYear),
                 db.categoryDao()
-                    .getCategoriesFromAllAccounts(userId, sTypeAsEnum, selectedMonth, selectedYear)
+                    .getCategoriesFromAllAccounts(idUser, sTypeAsEnum, selectedMonth, selectedYear)
                     .sumOf { it.total.toDouble() }
             )
         } else {
             categoryAdapter.updateCategories(
                 db.categoryDao().getCategoriesFromOneAccount(
-                    userId,
+                    idUser,
                     selectedAccount,
                     sTypeAsEnum,
                     selectedMonth,
                     selectedYear
                 ),
                 db.categoryDao().getCategoriesFromOneAccount(
-                    userId,
+                    idUser,
                     selectedAccount,
                     sTypeAsEnum,
                     selectedMonth,
