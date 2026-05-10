@@ -55,7 +55,7 @@ class Register : AppCompatActivity() {
         avatar3Button = findViewById(R.id.avatar_3)
         avatar4Button = findViewById(R.id.avatar_4)
 
-        var avatarSelected : Int? = null
+        var avatarSelected = 0
 
         backButton.setOnClickListener { _ ->
             val intent = Intent(this, Login::class.java)
@@ -85,39 +85,51 @@ class Register : AppCompatActivity() {
             val password = passwordTextInput.text.toString()
             val confirmPassword = confirmPasswordTextInput.text.toString()
 
-            var userValid = false
+            var userValid = true
 
             if (name.isEmpty()) {
                 nameTextInput.error = "Este campo es obligatorio"
-                userValid = false
-            } else {
-                userValid = true
-            }
+                userValid = false }
 
             if (email.isEmpty()) {
                 emailTextInput.error = "Este campo es obligatorio"
-                userValid = false
-            } else {
-                userValid = true
-            }
+                userValid = false }
 
             if (password.isEmpty()) {
                 passwordTextInput.error = "Este campo es obligatorio"
-                userValid = false
-            } else {
-                userValid = true
-            }
+                userValid = false }
 
             if (confirmPassword.isEmpty()) {
                 confirmPasswordTextInput.error = "Este campo es obligatorio"
-                userValid = false
-            } else {
-                userValid = true
-            }
+                userValid = false }
 
-            if (avatarSelected == null) {
+            if (password != confirmPassword){
+                confirmPasswordTextInput.error = "Las contraseñas no coinciden"
+                userValid = false }
+
+            if (avatarSelected == 0) {
                 Toast.makeText(this,
                     "Falta seleccionar un avatar", Toast.LENGTH_SHORT).show()
+                userValid = false }
+
+            val existingUser = db.userDao().getUserByEmail(email)
+
+            if (existingUser != null){
+                emailTextInput.error = "Este correo ya fue registrado"
+            }
+
+            if (!userValid) {
+                Toast.makeText(this,
+                    "ERROR: Revisa los datos", Toast.LENGTH_SHORT).show()
+            } else {
+                val user = User(username = name, email = email, avatar = avatarSelected, password = password)
+                db.userDao().InsertUser(user)
+
+                Toast.makeText(this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }
