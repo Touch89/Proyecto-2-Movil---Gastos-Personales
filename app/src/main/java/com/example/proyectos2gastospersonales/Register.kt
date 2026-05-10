@@ -1,5 +1,6 @@
 package com.example.proyectos2gastospersonales
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -44,5 +45,11 @@ class Register : AppCompatActivity() {
         passwordTextInput = findViewById(R.id.password_txtb)
         confirmPasswordTextInput = findViewById(R.id.confirm_password_txtb)
         registerButton = findViewById(R.id.register_button)
+
+        backButton.setOnClickListener { _ ->
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
