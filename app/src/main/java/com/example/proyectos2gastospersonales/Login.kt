@@ -62,6 +62,7 @@ class Login : AppCompatActivity() {
                 else {
                     // val intent = Intent(this, GameActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
@@ -69,6 +70,7 @@ class Login : AppCompatActivity() {
         registerButton.setOnClickListener { _ ->
             val intent = Intent(this, Register::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }
