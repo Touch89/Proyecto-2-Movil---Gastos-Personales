@@ -60,5 +60,44 @@ class Register : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        registerButton.setOnClickListener { _ ->
+            val name = nameTextInput.text.toString()
+            val email = emailTextInput.text.toString()
+            val password = passwordTextInput.text.toString()
+            val confirmPassword = confirmPasswordTextInput.text.toString()
+
+            var userValid = false
+
+            if (name.isEmpty()) {
+                nameTextInput.error = "Este campo es obligatorio"
+                userValid = false
+            } else {
+                userValid = true
+            }
+
+            if (email.isEmpty()) {
+                emailTextInput.error = "Este campo es obligatorio"
+                userValid = false
+            } else {
+                userValid = true
+            }
+
+            if (password.isEmpty()) {
+                passwordTextInput.error = "Este campo es obligatorio"
+                userValid = false
+            } else {
+                userValid = true
+            }
+
+            if (confirmPassword.isEmpty()) {
+                confirmPasswordTextInput.error = "Este campo es obligatorio"
+                userValid = false
+            } else {
+                userValid = true
+            }
+
+            
+        }
     }
 }
