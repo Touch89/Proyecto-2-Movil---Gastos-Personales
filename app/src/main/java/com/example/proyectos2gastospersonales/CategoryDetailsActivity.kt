@@ -179,7 +179,7 @@ class CategoryDetailsActivity : AppCompatActivity() {
         R.id.action_delete -> {
             val tempMovement = movementsList[itemPosition]
             val tempPosition = itemPosition
-            db.movementDao().deleteMovementById(tempMovement.movId)
+            //db.movementDao().deleteMovementById(tempMovement.movId)
             movementsList.removeAt(itemPosition)
             movementAdapter.notifyDataSetChanged()
             updateAmount()
@@ -199,7 +199,7 @@ class CategoryDetailsActivity : AppCompatActivity() {
                 .addCallback(object : Snackbar.Callback() {
                     override fun onDismissed(transientBottomBar: Snackbar, event: Int) {
                         if (event != DISMISS_EVENT_ACTION) {
-                            //db.movementDao().deleteMovementById(tempMovement.movId)
+                            db.movementDao().deleteMovementById(tempMovement.movId)
                         }
                     }
                 })
