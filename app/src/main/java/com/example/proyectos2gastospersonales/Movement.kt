@@ -7,7 +7,7 @@ import java.sql.Date
 data class Movement(
     @PrimaryKey val id: Int,
     val type: MovementType,
-    val amount: Float,
+    val amount: Double,
     @ColumnInfo(name = "account_id") val accountId: Int,
     @ColumnInfo(name = "category_id") val categoryId: Int,
     val description: String?,

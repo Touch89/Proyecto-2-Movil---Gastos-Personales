@@ -26,4 +26,55 @@ interface MovementDao {
 
     @Query("SELECT sum(amount) FROM movements WHERE category_id = :categoryId AND type = :type AND strftime('%m', date / 1000, 'unixepoch') = :month \n AND strftime('%Y', date / 1000, 'unixepoch') = :year ORDER BY sum(amount) DESC")
     fun getTotalAmountFromAllAccounts(categoryId: Int, type: MovementType, month: Int, year: Int): Float?
+
+    @Query("DELETE FROM movements WHERE id = :id")
+    fun deleteMovementById(id: Int)
+
+    @Query("""
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        INNER JOIN accounts as ac ON account_id == ac.id
+        WHERE m.user_id = :userId
+        AND m.category_id = (SELECT c.id FROM categories as c WHERE c.name == :categoryName)
+        AND m.type = :type
+        AND strftime('%m', m.date / 1000, 'unixepoch') = :month
+        AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
+        ORDER BY movDate DESC
+    """)
+    fun getMovementDataByCategoryByDateOrder(userId: Int, categoryName: String, type: MovementType, year: String, month: String): List<MovementItemData>
+
+    @Query("""
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        INNER JOIN accounts as ac ON account_id == ac.id
+        WHERE m.user_id = :userId
+        AND m.category_id = (SELECT c.id FROM categories as c WHERE c.name == :categoryName)
+        AND m.type = :type
+        AND strftime('%m', m.date / 1000, 'unixepoch') = :month
+        AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
+        ORDER BY accName DESC
+    """)
+    fun getMovementDataByCategoryByAccountOrder(userId: Int, categoryName: String, type: MovementType, year: String, month: String): List<MovementItemData>
+
+    @Query("""
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        INNER JOIN accounts as ac ON account_id == ac.id
+        WHERE m.user_id = :userId
+        AND m.category_id = (SELECT c.id FROM categories as c WHERE c.name == :categoryName)
+        AND m.type = :type
+        AND strftime('%m', m.date / 1000, 'unixepoch') = :month
+        AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
+        ORDER BY movAmount DESC
+    """)
+    fun getMovementDataByCategoryByAmountOrder(userId: Int, categoryName: String, type: MovementType, year: String, month: String): List<MovementItemData>
+
+    @Query("""
+        SELECT SUM(m.amount) FROM movements as m
+        INNER JOIN accounts as ac ON account_id == ac.id
+        WHERE m.user_id = :userId
+        AND m.category_id = (SELECT c.id FROM categories as c WHERE c.name == :categoryName)
+        AND m.type = :type
+        AND strftime('%m', m.date / 1000, 'unixepoch') = :month
+        AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
+        GROUP BY category_id
+    """)
+    fun getMovementsTotalSum(userId: Int, categoryName: String, type: MovementType, year: String, month: String): Double
 }

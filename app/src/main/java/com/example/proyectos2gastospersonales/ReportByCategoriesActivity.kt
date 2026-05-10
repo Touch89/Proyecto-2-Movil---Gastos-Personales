@@ -70,10 +70,14 @@ class CategoryAdapter(
             )
 
             view.setOnClickListener {
-                val intent = Intent(activity, MainActivity::class.java).apply {
+                val intent = Intent(activity, CategoryDetailsActivity::class.java).apply {
                 }
                 intent.putExtra("category_name", category.name)
                 intent.putExtra("user_id", activity.idUser)
+                intent.putExtra("total_sum", totalSum)
+                intent.putExtra("selected_month", activity.selectedMonth)
+                intent.putExtra("selected_year", activity.selectedYear)
+                intent.putExtra("selected_type", activity.selectedType)
                 activity.startActivity(intent)
             }
         }
@@ -107,6 +111,9 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
 
     val idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
     private val accountId = 1 //TEMPORAL
+    var selectedMonth = "0"
+    var selectedYear = "1970"
+    var selectedType = "Gasto"
     val db by lazy { AppDatabase.getDatabase(this) }
     private lateinit var rv: RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
@@ -128,7 +135,7 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
         "Diciembre"
     )
 
-    val spinnerYear = (1970..2030).toList().toTypedArray()
+    val spinnerYear = (2023..2030).toList().toTypedArray()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -213,7 +220,12 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
         rv.adapter = categoryAdapter
     }
 
-    private fun updateRView() {
+    override fun onResume() {
+        super.onResume()
+        updateRView()
+    }
+
+    fun updateRView() {
         val itemAccountSpinner = findViewById<Spinner>(R.id.spinner_account)
         val itemTypeSpinner = findViewById<Spinner>(R.id.spinner_type)
         val itemYearSpinner = findViewById<Spinner>(R.id.spinner_year)
@@ -225,6 +237,10 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
 
         val selectedYear = itemYearSpinner.selectedItem.toString()
         val selectedMonth = String.format("%02d", itemMonthSpinner.selectedItemPosition + 1)
+
+        this.selectedType = selectedType
+        this.selectedMonth = selectedMonth
+        this.selectedYear = selectedYear
 
         if (selectedAccount == "Todas") {
             categoryAdapter.updateCategories(
