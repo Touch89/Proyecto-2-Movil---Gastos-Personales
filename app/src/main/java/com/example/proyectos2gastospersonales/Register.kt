@@ -55,10 +55,28 @@ class Register : AppCompatActivity() {
         avatar3Button = findViewById(R.id.avatar_3)
         avatar4Button = findViewById(R.id.avatar_4)
 
+        var avatarSelected : Int? = null
+
         backButton.setOnClickListener { _ ->
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
+        }
+
+        avatar1Button.setOnClickListener { _ ->
+            avatarSelected = 1
+        }
+
+        avatar2Button.setOnClickListener { _ ->
+            avatarSelected = 2
+        }
+
+        avatar3Button.setOnClickListener { _ ->
+            avatarSelected = 3
+        }
+
+        avatar4Button.setOnClickListener { _ ->
+            avatarSelected = 4
         }
 
         registerButton.setOnClickListener { _ ->
@@ -97,7 +115,10 @@ class Register : AppCompatActivity() {
                 userValid = true
             }
 
-            
+            if (avatarSelected == null) {
+                Toast.makeText(this,
+                    "Falta seleccionar un avatar", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
