@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+    <group
+        android:id="@+id/group_1"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/baseline_home_24"
+            android:title="Inicio"/>
+
+        <item
+            android:id="@+id/nav_movements"
+            android:icon="@drawable/baseline_receipt_long_24"
+            android:title="Movimientos" />
+
+        <item
+            android:id="@+id/nav_accounts"
+            android:icon="@drawable/baseline_credit_card_24"
+            android:title="Cuentas" />
+
+    </group>
+
+    <group
+        android:id="@+id/group_2"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_categories"
+            android:icon="@drawable/baseline_category_24"
+            android:title="Categorías" />
+
+    </group>
+
+    <group
+        android:id="@+id/group_3"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/baseline_help_24"
+            android:title="Ayuda" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/baseline_info_24"
+            android:title="Acerca de" />
+
+    </group>
+
+</menu>
