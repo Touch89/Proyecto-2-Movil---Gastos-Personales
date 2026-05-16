@@ -77,4 +77,10 @@ interface MovementDao {
         GROUP BY category_id
     """)
     fun getMovementsTotalSum(userId: Int, categoryName: String, type: MovementType, year: String, month: String): Double
+
+    @Query("SELECT * FROM movements WHERE id = :id")
+    fun getMovement(id: Int): Movement
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovement(vararg movement: Movement)
 }

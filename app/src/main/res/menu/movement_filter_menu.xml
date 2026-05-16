@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_filterByDate"
+        android:title="Ordenar por fecha" />
+
+    <item
+        android:id="@+id/action_filterByAccount"
+        android:title="Ordenar por cuenta" />
+
+    <item
+        android:id="@+id/action_filterByAmount"
+        android:title="Ordenar por cantidad" />
+</menu>

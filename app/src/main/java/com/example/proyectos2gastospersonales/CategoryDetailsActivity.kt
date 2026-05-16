@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -95,7 +97,7 @@ class MovementAdapter(
     }
 }
 
-class CategoryDetailsActivity : AppCompatActivity() {
+class CategoryDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener{
     private lateinit var typeText: TextView
     private lateinit var totalSumText: TextView
     private lateinit var categoryText: TextView
@@ -108,6 +110,12 @@ class CategoryDetailsActivity : AppCompatActivity() {
     private var movementsList: MutableList<MovementItemData> = mutableListOf()
     private var itemPosition = -1
 
+    private var idUser: Int = -999
+    private var categoryName: String? = ""
+    private var selectedMonth: String? = ""
+    private var selectedYear: String? = ""
+    private var selectedType: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -118,11 +126,11 @@ class CategoryDetailsActivity : AppCompatActivity() {
             insets
         }
 
-        val idUser = intent.getIntExtra("user_id", -999)
-        val categoryName = intent.getStringExtra("category_name")
-        val selectedMonth = intent.getStringExtra("selected_month")
-        val selectedYear = intent.getStringExtra("selected_year")
-        val selectedType = intent.getStringExtra("selected_type")
+        idUser = intent.getIntExtra("user_id", -999)
+        categoryName = intent.getStringExtra("category_name")
+        selectedMonth = intent.getStringExtra("selected_month")
+        selectedYear = intent.getStringExtra("selected_year")
+        selectedType = intent.getStringExtra("selected_type")
 
         rv = findViewById(R.id.rv)
         rv.layoutManager = LinearLayoutManager(this)
@@ -143,6 +151,10 @@ class CategoryDetailsActivity : AppCompatActivity() {
             finish()
         }
 
+        filterButton.setOnClickListener { view ->
+            showMenu(view)
+        }
+
         movementsList = db.movementDao().getMovementDataByCategoryByDateOrder(
             idUser,
             categoryName.toString(),
@@ -155,6 +167,59 @@ class CategoryDetailsActivity : AppCompatActivity() {
         rv.adapter = movementAdapter
 
         updateAmount()
+    }
+
+    fun showMenu(v: View) {
+        PopupMenu(this, v).apply {
+            setOnMenuItemClickListener(this@CategoryDetailsActivity)
+            inflate(R.menu.movement_filter_menu)
+            show()
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_filterByDate -> {
+                val updatedData = db.movementDao().getMovementDataByCategoryByDateOrder(
+                    idUser,
+                    categoryName.toString(),
+                    MovementType.valueOf(selectedType.toString()),
+                    selectedYear.toString(),
+                    selectedMonth.toString()
+                ).toMutableList()
+                movementAdapter.updateMovements(updatedData)
+                updateAmount()
+                true
+
+            }
+
+            R.id.action_filterByAccount -> {
+                val updatedData = db.movementDao().getMovementDataByCategoryByAccountOrder(
+                    idUser,
+                    categoryName.toString(),
+                    MovementType.valueOf(selectedType.toString()),
+                    selectedYear.toString(),
+                    selectedMonth.toString()
+                ).toMutableList()
+                movementAdapter.updateMovements(updatedData)
+                updateAmount()
+                true
+            }
+
+            R.id.action_filterByAmount -> {
+                val updatedData = db.movementDao().getMovementDataByCategoryByAmountOrder(
+                    idUser,
+                    categoryName.toString(),
+                    MovementType.valueOf(selectedType.toString()),
+                    selectedYear.toString(),
+                    selectedMonth.toString()
+                ).toMutableList()
+                movementAdapter.updateMovements(updatedData)
+                updateAmount()
+                true
+            }
+            else -> false
+        }
     }
 
     override fun onCreateContextMenu(
@@ -179,7 +244,9 @@ class CategoryDetailsActivity : AppCompatActivity() {
         R.id.action_delete -> {
             val tempMovement = movementsList[itemPosition]
             val tempPosition = itemPosition
-            //db.movementDao().deleteMovementById(tempMovement.movId)
+            val movCopy: Movement = db.movementDao().getMovement(tempMovement.movId)
+            db.movementDao().deleteMovementById(tempMovement.movId)
+            // Agarrar la id del mov, guardar una copia del mov y luego hacer el insert a la bdd***
             movementsList.removeAt(itemPosition)
             movementAdapter.notifyDataSetChanged()
             updateAmount()
@@ -188,6 +255,7 @@ class CategoryDetailsActivity : AppCompatActivity() {
                 .make(rv, "Movimiento eliminado", Snackbar.LENGTH_LONG)
                 .setAction("Deshacer") {
                     movementsList.add(tempPosition, tempMovement)
+                    db.movementDao().insertMovement(movCopy)
                     movementAdapter.notifyDataSetChanged()
                     updateAmount()
                     Toast.makeText(
@@ -196,13 +264,6 @@ class CategoryDetailsActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                .addCallback(object : Snackbar.Callback() {
-                    override fun onDismissed(transientBottomBar: Snackbar, event: Int) {
-                        if (event != DISMISS_EVENT_ACTION) {
-                            db.movementDao().deleteMovementById(tempMovement.movId)
-                        }
-                    }
-                })
             snackbar.show()
             true
         }
