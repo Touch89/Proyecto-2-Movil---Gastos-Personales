@@ -6,4 +6,13 @@ import androidx.room.*
 interface UserDao {
     @Query("SELECT * FROM users")
     fun getAllUsers(): List<User>
+
+    @Query("SELECT * FROM users WHERE id = :id")
+    fun getUser(id: Int): User
+
+    @Query("SELECT * FROM users WHERE email = :email")
+    fun getUserByEmail(email: String): User?
+    
+    @Insert
+    fun InsertUser(user: User)
 }
