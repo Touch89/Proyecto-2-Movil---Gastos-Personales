@@ -20,9 +20,9 @@ import com.google.android.material.textfield.TextInputLayout
 import java.sql.Date
 import java.util.Calendar
 
-class AddMovementActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class AddMovementActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
-    val idUser = 1 // TEMPORAL
+    var idUser = 1 // TEMPORAL
 
     val db by lazy { AppDatabase.getDatabase(this) }
 
@@ -61,6 +61,13 @@ class AddMovementActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             insets
         }
 
+        setupDrawer("Movimientos", R.layout.activity_add_movement)
+
+        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+
+        idUser = sharedPreferences.getInt("user_id", -1)
+
+
         // Tipo recibido desde Pantalla #3
         val movementTypeName = intent.getStringExtra("movement_type") ?: MovementType.Gasto.name
         val initialType = MovementType.valueOf(movementTypeName)
@@ -88,7 +95,7 @@ class AddMovementActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
         findViewById<ImageButton>(R.id.back_button).setOnClickListener { finish() }
 
         // Cargar datos desde la BD
-        accounts = db.accountDao().getAccountsFromUser(idUser).accounts
+        accounts = db.accountDao().getAccountsFromUser(idUser)?.accounts ?: emptyList()
         categories = db.categoryDao().getAllCategoriesFromUser(idUser).categories
 
         setupSpinnerTipo(initialType)
@@ -243,7 +250,7 @@ class AddMovementActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
         val selectedTypeName = spinnerType.selectedItem?.toString() ?: return
         val type = MovementType.valueOf(selectedTypeName)
-        val description = etDescription.text.toString().trim().ifEmpty { null }
+        val description = etDescription.text.toString().trim().ifEmpty { "Sin descripción" }
         val date = Date(selectedDate.timeInMillis)
         val nextId = db.movementDao().getNextId()
 

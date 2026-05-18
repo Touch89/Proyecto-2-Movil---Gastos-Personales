@@ -30,7 +30,7 @@ data class MovementItemData(
     val accIcon: Int,
     val accName: String,
     val movDate: Date,
-    val movDesc: String,
+    val movDesc: String?,
     val movAmount: Double
 )
 
@@ -135,7 +135,9 @@ class CategoryDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLi
             insets
         }
 
-        idUser = intent.getIntExtra("user_id", -999)
+        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+        idUser = sharedPreferences.getInt("user_id", -1)
+
         categoryName = intent.getStringExtra("category_name")
         selectedMonth = intent.getStringExtra("selected_month")
         selectedYear = intent.getStringExtra("selected_year")

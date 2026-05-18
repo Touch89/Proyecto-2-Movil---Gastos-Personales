@@ -121,7 +121,7 @@ class CategoryAdapter(
     }
 }
 
-class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class ReportByCategoriesActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     var idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
     var accountId = 1 //TEMPORAL
@@ -165,15 +165,15 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
             insets
         }
 
-        val userAccounts = db.accountDao().getAccountsFromUser(idUser)
+        setupDrawer("Categorías", R.layout.activity_report_by_categories)
+
+        val userAccounts = db.accountDao().getAccountsFromUser(idUser)?.accounts ?: emptyList()
 
         val accountNameList = mutableListOf<String>()
 
         accountNameList.add("Todas")
 
-        for (account in userAccounts.accounts) {
-            accountNameList.add(account.name)
-        }
+        userAccounts.forEach { accountNameList.add(it.name) }
 
         rv = findViewById(R.id.rv)
         rv.layoutManager = LinearLayoutManager(this)
@@ -188,7 +188,9 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
 
         val itemMonthSpinner = findViewById<Spinner>(R.id.spinner_month)
 
-        this.idUser = intent.getIntExtra("user_id", 1)
+        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+        idUser = sharedPreferences.getInt("user_id", -1)
+
         val passedYear = intent.getStringExtra("selected_year")
         val passedMonth = intent.getStringExtra("selected_month")
         val passedAccount = intent.getStringExtra("selected_account")
