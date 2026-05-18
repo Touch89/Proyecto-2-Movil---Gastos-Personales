@@ -90,7 +90,15 @@ class MovementListAdapter(
                     else -> R.drawable.ic_launcher_foreground
                 }
             )
-            itemCategory.text = movement.movDesc
+            itemCategory.text = when (movement.categoryId) {
+                1 -> "Alimentación"
+                2 -> "Transporte"
+                3 -> "Salario"
+                4 -> "Entretenimiento"
+                5 -> "Transferencias"
+
+                else -> "Categoría"
+            }
             itemAmount.text = "$${movement.movAmount}"
             itemType.setImageResource(
                 when (movement.type) {
