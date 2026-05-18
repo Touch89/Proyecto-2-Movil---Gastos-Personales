@@ -38,6 +38,7 @@ class MovementListAdapter(
         private val itemCategoryImage: ImageView
         private val itemCategory: TextView
         private val itemAmount: TextView
+        private val itemType: ImageView
         private lateinit var movement: MovementItemData
 
         init {
@@ -47,6 +48,7 @@ class MovementListAdapter(
             itemCategoryImage = view.findViewById(R.id.item_category_icon)
             itemCategory = view.findViewById(R.id.item_category)
             itemAmount = view.findViewById(R.id.item_amount)
+            itemType = view.findViewById(R.id.item_type)
         }
 
         fun bind(movement: MovementItemData) {
@@ -70,23 +72,35 @@ class MovementListAdapter(
                 }
             )
             itemCategoryImage.setImageResource(
-                when (101) {
-                    101 -> R.drawable.baseline_account_balance_wallet_24
-                    102 -> R.drawable.baseline_credit_card_24
-                    103 -> R.drawable.baseline_payment_24
-                    104 -> R.drawable.baseline_account_balance_24
-                    105 -> R.drawable.baseline_savings_24
-                    106 -> R.drawable.baseline_local_activity_24
-                    107 -> R.drawable.baseline_phone_android_24
-                    108 -> R.drawable.baseline_trending_up_24
-                    109 -> R.drawable.baseline_lock_24
-                    110 -> R.drawable.baseline_monetization_on_24
+                when (movement.categoryId + 200) {
+                    201 -> R.drawable.baseline_shopping_cart_24
+                    202 -> R.drawable.baseline_directions_car_24
+                    203 -> R.drawable.baseline_restaurant_24
+                    204 -> R.drawable.baseline_home_24
+                    205 -> R.drawable.baseline_computer_24
+                    206 -> R.drawable.baseline_pets_24
+                    207 -> R.drawable.baseline_school_24
+                    208 -> R.drawable.baseline_medical_services_24
+                    209 -> R.drawable.baseline_shopping_bag_24
+                    210 -> R.drawable.baseline_work_24
+
+                    0 -> R.drawable.ic_android_black_24dp
+                    1 -> R.drawable.outline_1k_24
 
                     else -> R.drawable.ic_launcher_foreground
                 }
             )
             itemCategory.text = movement.movDesc
             itemAmount.text = "$${movement.movAmount}"
+            itemType.setImageResource(
+                when (movement.type) {
+                    MovementType.Gasto -> R.drawable.baseline_payment_24
+                    MovementType.Transferencia -> R.drawable.baseline_phone_android_24
+                    MovementType.Ingreso -> R.drawable.baseline_trending_up_24
+
+                    else -> R.drawable.ic_launcher_foreground
+                }
+            )
         }
     }
 
@@ -114,7 +128,9 @@ class MovementListAdapter(
         notifyDataSetChanged()
     }
 }
-class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, PopupMenu.OnMenuItemClickListener {
+
+class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
+    PopupMenu.OnMenuItemClickListener {
 
     var idUser =
         1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
@@ -298,19 +314,37 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, Po
         return when (item.itemId) {
             R.id.action_filterByDate -> {
                 if (selectedAccount == "Todas") {
-                    movementAdapter.updateMovements(db.movementDao().getMovementsByDate(idUser, this.selectedYear, this.selectedMonth))
+                    movementAdapter.updateMovements(
+                        db.movementDao()
+                            .getMovementsByDate(idUser, this.selectedYear, this.selectedMonth)
+                    )
                 } else {
-                    movementAdapter.updateMovements(db.movementDao().getMovementsByDate(idUser, this.selectedYear, this.selectedMonth))
+                    movementAdapter.updateMovements(
+                        db.movementDao()
+                            .getMovementsByDate(idUser, this.selectedYear, this.selectedMonth)
+                    )
                 }
                 true
             }
 
             R.id.action_filterByAccount -> {
                 if (selectedAccount == "Todas") {
-                    movementsList = db.movementDao().getMovementsByDateByAccount(idUser, "Todas", this.selectedYear, this.selectedMonth) as MutableList<MovementItemData>
+                    movementsList = db.movementDao().getMovementsByDateByAccount(
+                        idUser,
+                        "Todas",
+                        this.selectedYear,
+                        this.selectedMonth
+                    ) as MutableList<MovementItemData>
                     movementAdapter.updateMovements(movementsList)
                 } else {
-                    movementAdapter.updateMovements(db.movementDao().getMovementsByDateByAccount(idUser, selectedType.toString(), this.selectedYear, this.selectedMonth))
+                    movementAdapter.updateMovements(
+                        db.movementDao().getMovementsByDateByAccount(
+                            idUser,
+                            selectedType.toString(),
+                            this.selectedYear,
+                            this.selectedMonth
+                        )
+                    )
                 }
                 true
             }
@@ -318,11 +352,19 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, Po
             R.id.action_filterByAmount -> {
                 if (selectedAccount == "Todas") {
                     movementsList =
-                        db.movementDao().getMovementsByAmount(idUser, this.selectedYear,  this.selectedMonth) as MutableList<MovementItemData>
+                        db.movementDao().getMovementsByAmount(
+                            idUser,
+                            this.selectedYear,
+                            this.selectedMonth
+                        ) as MutableList<MovementItemData>
                     movementAdapter.updateMovements(movementsList)
                 } else {
                     movementsList =
-                        db.movementDao().getMovementsByAmount(idUser, this.selectedYear, this.selectedMonth) as MutableList<MovementItemData>
+                        db.movementDao().getMovementsByAmount(
+                            idUser,
+                            this.selectedYear,
+                            this.selectedMonth
+                        ) as MutableList<MovementItemData>
                     movementAdapter.updateMovements(movementsList)
                 }
                 true
@@ -363,10 +405,19 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, Po
         this.selectedYear = selectedYear
 
         if (selectedAccount == "Todas") {
-            movementsList = db.movementDao().getMovementsByDate(1, this.selectedYear, this.selectedMonth) as MutableList<MovementItemData>
+            movementsList = db.movementDao().getMovementsByDate(
+                1,
+                this.selectedYear,
+                this.selectedMonth
+            ) as MutableList<MovementItemData>
             movementAdapter.updateMovements(movementsList)
         } else {
-            movementsList = db.movementDao().getMovementsByDateByAccount(idUser, selectedType.toString(), this.selectedYear, this.selectedMonth) as MutableList<MovementItemData>
+            movementsList = db.movementDao().getMovementsByDateByAccount(
+                idUser,
+                selectedType.toString(),
+                this.selectedYear,
+                this.selectedMonth
+            ) as MutableList<MovementItemData>
             movementAdapter.updateMovements(movementsList)
         }
     }

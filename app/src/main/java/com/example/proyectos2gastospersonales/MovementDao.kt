@@ -31,7 +31,7 @@ interface MovementDao {
     fun deleteMovementById(id: Int)
 
     @Query("""
-        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount, type, category_id as categoryId FROM movements as m
         INNER JOIN accounts as ac ON account_id == ac.id
         WHERE m.user_id = :userId
         AND m.category_id = (SELECT c.id FROM categories as c WHERE c.name == :categoryName)
@@ -43,7 +43,7 @@ interface MovementDao {
     fun getMovementDataByCategoryByDateOrder(userId: Int, categoryName: String, type: MovementType, year: String, month: String): List<MovementItemData>
 
     @Query("""
-        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount, type, category_id as categoryId FROM movements as m
         INNER JOIN accounts as ac ON account_id == ac.id
         WHERE m.user_id = :userId
         AND m.category_id = (SELECT c.id FROM categories as c WHERE c.name == :categoryName)
@@ -55,7 +55,7 @@ interface MovementDao {
     fun getMovementDataByCategoryByAccountOrder(userId: Int, categoryName: String, type: MovementType, year: String, month: String): List<MovementItemData>
 
     @Query("""
-        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount, type, category_id as categoryId FROM movements as m
         INNER JOIN accounts as ac ON account_id == ac.id
         WHERE m.user_id = :userId
         AND m.category_id = (SELECT c.id FROM categories as c WHERE c.name == :categoryName)
@@ -79,7 +79,7 @@ interface MovementDao {
     fun getMovementsTotalSum(userId: Int, categoryName: String, type: MovementType, year: String, month: String): Double
 
     @Query("""
-        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount, type, category_id as categoryId FROM movements as m
         INNER JOIN accounts as ac ON account_id == ac.id
         WHERE m.user_id = :userId
         AND strftime('%m', m.date / 1000, 'unixepoch') = :month
@@ -88,7 +88,7 @@ interface MovementDao {
     """)
     fun getMovementsByDate(userId: Int, year: String, month: String): List<MovementItemData>
     @Query("""
-        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount, type, category_id as categoryId FROM movements as m
         INNER JOIN accounts as ac ON account_id == ac.id
         WHERE ac.user_id = :userId AND ac.name = :accountName
         AND strftime('%m', m.date / 1000, 'unixepoch') = :month
@@ -97,7 +97,7 @@ interface MovementDao {
     """)
     fun getMovementsByDateByAccount(userId: Int, accountName: String, year: String, month: String): List<MovementItemData>
     @Query("""
-        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount, type, category_id as categoryId FROM movements as m
         INNER JOIN accounts as ac ON account_id == ac.id
         WHERE m.user_id = :userId
         AND strftime('%m', m.date / 1000, 'unixepoch') = :month

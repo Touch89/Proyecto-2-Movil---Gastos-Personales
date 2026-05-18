@@ -31,7 +31,9 @@ data class MovementItemData(
     val accName: String,
     val movDate: Date,
     val movDesc: String?,
-    val movAmount: Double
+    val movAmount: Double,
+    val categoryId: Int,
+    val type: MovementType
 )
 
 class MovementAdapter(
