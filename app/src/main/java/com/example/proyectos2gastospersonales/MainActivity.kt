@@ -202,13 +202,17 @@ class MainActivity : AppCompatActivity() {
         val selectedYear = spinnerYear.selectedItem?.toString() ?: "2024"
         val selectedMonth = String.format("%02d", spinnerMonth.selectedItemPosition + 1)
 
-        // Resumen por categoría (Gastos del mes seleccionado)
+        // Resumen por categoría (Ingresos y Gastos del mes seleccionado)
         val categories: List<CategoryData> = if (selectedAccount == "Todas") {
             db.categoryDao().getCategoriesFromAllAccounts(
+                idUser, MovementType.Ingreso, selectedMonth, selectedYear
+            ) + db.categoryDao().getCategoriesFromAllAccounts(
                 idUser, MovementType.Gasto, selectedMonth, selectedYear
             )
         } else {
             db.categoryDao().getCategoriesFromOneAccount(
+                idUser, selectedAccount, MovementType.Ingreso, selectedMonth, selectedYear
+            ) + db.categoryDao().getCategoriesFromOneAccount(
                 idUser, selectedAccount, MovementType.Gasto, selectedMonth, selectedYear
             )
         }
