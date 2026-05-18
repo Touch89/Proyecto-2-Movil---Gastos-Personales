@@ -154,15 +154,13 @@ class ReportByCategoriesActivity : BaseActivity(), AdapterView.OnItemSelectedLis
 
         setupDrawer("Categorías", R.layout.activity_report_by_categories)
 
-        val userAccounts = db.accountDao().getAccountsFromUser(idUser)
+        val userAccounts = db.accountDao().getAccountsFromUser(idUser)?.accounts ?: emptyList()
 
         val accountNameList = mutableListOf<String>()
 
         accountNameList.add("Todas")
 
-        for (account in userAccounts.accounts) {
-            accountNameList.add(account.name)
-        }
+        userAccounts.forEach { accountNameList.add(it.name) }
 
         rv = findViewById(R.id.rv)
         rv.layoutManager = LinearLayoutManager(this)
@@ -177,7 +175,9 @@ class ReportByCategoriesActivity : BaseActivity(), AdapterView.OnItemSelectedLis
 
         val itemMonthSpinner = findViewById<Spinner>(R.id.spinner_month)
 
-        this.idUser = intent.getIntExtra("user_id", 1)
+        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+        idUser = sharedPreferences.getInt("user_id", -1)
+
         val passedYear = intent.getStringExtra("selected_year")
         val passedMonth = intent.getStringExtra("selected_month")
         val passedAccount = intent.getStringExtra("selected_account")
