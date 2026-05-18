@@ -78,7 +78,7 @@ class HomeCategoryAdapter(
     }
 }
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     val idUser = 1 // TEMPORAL
 
@@ -112,6 +112,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        setupDrawer("Inicio", R.layout.activity_main)
 
         // Views
         spinnerAccount = findViewById(R.id.spinner_account)

@@ -3,7 +3,6 @@ package com.example.proyectos2gastospersonales
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,15 +11,21 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
-class Register : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
     private lateinit var db: AppDatabase
     private lateinit var backButton: ImageButton
-    private lateinit var nameTextInput: EditText
-    private lateinit var emailTextInput: EditText
-    private lateinit var passwordTextInput: EditText
-    private lateinit var confirmPasswordTextInput: EditText
+    private lateinit var nameTextLayout: TextInputLayout
+    private lateinit var emailTextLayout: TextInputLayout
+    private lateinit var passwordTextLayout: TextInputLayout
+    private lateinit var confirmPasswordTextLayout: TextInputLayout
+    private lateinit var nameTextInput: TextInputEditText
+    private lateinit var emailTextInput: TextInputEditText
+    private lateinit var passwordTextInput: TextInputEditText
+    private lateinit var confirmPasswordTextInput: TextInputEditText
     private lateinit var registerButton: Button
     private lateinit var avatar1Button: ImageButton
     private lateinit var avatar2Button: ImageButton
@@ -45,10 +50,14 @@ class Register : AppCompatActivity() {
             .build()
 
         backButton = findViewById(R.id.back_button)
-        nameTextInput = findViewById(R.id.user_txtb)
-        emailTextInput = findViewById(R.id.email_txtb)
-        passwordTextInput = findViewById(R.id.password_txtb)
-        confirmPasswordTextInput = findViewById(R.id.confirm_password_txtb)
+        nameTextLayout = findViewById(R.id.user_txtb)
+        emailTextLayout = findViewById(R.id.email_txtb)
+        passwordTextLayout = findViewById(R.id.password_txtb)
+        confirmPasswordTextLayout = findViewById(R.id.confirm_password_txtb)
+        nameTextInput = findViewById(R.id.user_input)
+        emailTextInput = findViewById(R.id.email_input)
+        passwordTextInput = findViewById(R.id.password_input)
+        confirmPasswordTextInput = findViewById(R.id.confirm_password_input)
         registerButton = findViewById(R.id.register_button)
         avatar1Button = findViewById(R.id.avatar_1)
         avatar2Button = findViewById(R.id.avatar_2)
@@ -58,7 +67,7 @@ class Register : AppCompatActivity() {
         var avatarSelected = 0
 
         backButton.setOnClickListener { _ ->
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -88,23 +97,23 @@ class Register : AppCompatActivity() {
             var userValid = true
 
             if (name.isEmpty()) {
-                nameTextInput.error = "Este campo es obligatorio"
+                nameTextLayout.error = "Este campo es obligatorio"
                 userValid = false }
 
             if (email.isEmpty()) {
-                emailTextInput.error = "Este campo es obligatorio"
+                emailTextLayout.error = "Este campo es obligatorio"
                 userValid = false }
 
             if (password.isEmpty()) {
-                passwordTextInput.error = "Este campo es obligatorio"
+                passwordTextLayout.error = "Este campo es obligatorio"
                 userValid = false }
 
             if (confirmPassword.isEmpty()) {
-                confirmPasswordTextInput.error = "Este campo es obligatorio"
+                confirmPasswordTextLayout.error = "Este campo es obligatorio"
                 userValid = false }
 
             if (password != confirmPassword){
-                confirmPasswordTextInput.error = "Las contraseñas no coinciden"
+                confirmPasswordTextLayout.error = "Las contraseñas no coinciden"
                 userValid = false }
 
             if (avatarSelected == 0) {
@@ -115,7 +124,8 @@ class Register : AppCompatActivity() {
             val existingUser = db.userDao().getUserByEmail(email)
 
             if (existingUser != null){
-                emailTextInput.error = "Este correo ya fue registrado"
+                emailTextLayout.error = "Este correo ya fue registrado"
+                userValid = false
             }
 
             if (!userValid) {
@@ -127,7 +137,7 @@ class Register : AppCompatActivity() {
 
                 Toast.makeText(this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(this, Login::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }

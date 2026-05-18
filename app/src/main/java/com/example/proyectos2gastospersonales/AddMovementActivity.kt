@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputLayout
 import java.sql.Date
 import java.util.Calendar
 
-class AddMovementActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class AddMovementActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     val idUser = 1 // TEMPORAL
 
@@ -60,6 +60,8 @@ class AddMovementActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        setupDrawer("Movimientos", R.layout.activity_add_movement)
 
         // Tipo recibido desde Pantalla #3
         val movementTypeName = intent.getStringExtra("movement_type") ?: MovementType.Gasto.name

@@ -108,7 +108,7 @@ class CategoryAdapter(
     }
 }
 
-class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class ReportByCategoriesActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     var idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
     var accountId = 1 //TEMPORAL
@@ -151,6 +151,8 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        setupDrawer("Categorías", R.layout.activity_report_by_categories)
 
         val userAccounts = db.accountDao().getAccountsFromUser(idUser)
 

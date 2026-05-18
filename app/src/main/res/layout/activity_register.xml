@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Register">
+    tools:context=".RegisterActivity">
 
     <ImageButton
         android:id="@+id/back_button"
@@ -46,6 +46,7 @@
             app:startIconDrawable="@drawable/outline_person_outline_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="emailAddress"
@@ -63,6 +64,7 @@
             app:startIconDrawable="@drawable/outline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="emailAddress"
@@ -82,6 +84,7 @@
             app:startIconDrawable="@drawable/outline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="password"
@@ -100,6 +103,7 @@
             app:startIconDrawable="@drawable/outline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="password"
