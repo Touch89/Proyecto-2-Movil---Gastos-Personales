@@ -2,15 +2,20 @@ package com.example.proyectos2gastospersonales
 
 import android.os.Bundle
 import android.view.ContextMenu
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,9 +24,96 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlin.Int
 import kotlin.String
-import kotlin.toString
 
+class MovementListAdapter(
+    private val movement: MutableList<MovementItemData>,
+    val activity: AppCompatActivity
+) :
+    RecyclerView.Adapter<MovementListAdapter.ViewHolder>() {
 
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        private val itemDate: TextView
+        private val itemAccountIcon: ImageView
+        private val itemAccount: TextView
+        private val itemCategoryImage: ImageView
+        private val itemCategory: TextView
+        private val itemAmount: TextView
+        private lateinit var movement: MovementItemData
+
+        init {
+            itemDate = view.findViewById(R.id.item_date)
+            itemAccountIcon = view.findViewById(R.id.item_account_icon)
+            itemAccount = view.findViewById(R.id.item_account_name)
+            itemCategoryImage = view.findViewById(R.id.item_category_icon)
+            itemCategory = view.findViewById(R.id.item_category)
+            itemAmount = view.findViewById(R.id.item_amount)
+        }
+
+        fun bind(movement: MovementItemData) {
+            this.movement = movement
+            itemDate.text = movement.movDate.toString()
+            itemAccount.text = movement.accName
+            itemAccountIcon.setImageResource(
+                when (movement.accIcon) {
+                    101 -> R.drawable.baseline_account_balance_wallet_24
+                    102 -> R.drawable.baseline_credit_card_24
+                    103 -> R.drawable.baseline_payment_24
+                    104 -> R.drawable.baseline_account_balance_24
+                    105 -> R.drawable.baseline_savings_24
+                    106 -> R.drawable.baseline_local_activity_24
+                    107 -> R.drawable.baseline_phone_android_24
+                    108 -> R.drawable.baseline_trending_up_24
+                    109 -> R.drawable.baseline_lock_24
+                    110 -> R.drawable.baseline_monetization_on_24
+
+                    else -> R.drawable.ic_launcher_foreground
+                }
+            )
+            itemCategoryImage.setImageResource(
+                when (101) {
+                    101 -> R.drawable.baseline_account_balance_wallet_24
+                    102 -> R.drawable.baseline_credit_card_24
+                    103 -> R.drawable.baseline_payment_24
+                    104 -> R.drawable.baseline_account_balance_24
+                    105 -> R.drawable.baseline_savings_24
+                    106 -> R.drawable.baseline_local_activity_24
+                    107 -> R.drawable.baseline_phone_android_24
+                    108 -> R.drawable.baseline_trending_up_24
+                    109 -> R.drawable.baseline_lock_24
+                    110 -> R.drawable.baseline_monetization_on_24
+
+                    else -> R.drawable.ic_launcher_foreground
+                }
+            )
+            itemCategory.text = movement.movDesc
+            itemAmount.text = "$${movement.movAmount}"
+        }
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.movements_list_item, parent, false)
+
+        activity.registerForContextMenu(view)
+
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(movement[position])
+
+    override fun getItemCount(): Int = movement.size
+
+    fun updateMovements(updatedMovements: List<MovementItemData>) {
+        movement.clear()
+        movement.addAll(updatedMovements)
+        notifyDataSetChanged()
+    }
+}
 class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, PopupMenu.OnMenuItemClickListener {
 
     var idUser =
@@ -38,7 +130,7 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, Po
 
     val db by lazy { AppDatabase.getDatabase(this) }
     private lateinit var rv: RecyclerView
-    private lateinit var movementAdapter: MovementAdapter
+    private lateinit var movementAdapter: MovementListAdapter
     private lateinit var backButton: ImageButton
     private val spinnerType = arrayOf(
         "Gasto", "Ingreso"
@@ -121,7 +213,7 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, Po
             selectedMonth
         ).toMutableList()
 
-        movementAdapter = MovementAdapter(movementsList, this)
+        movementAdapter = MovementListAdapter(movementsList, this)
         rv.adapter = movementAdapter
 
         updateAmount()
@@ -190,7 +282,7 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, Po
             }
         }
 
-        movementAdapter = MovementAdapter(mutableListOf(), this)
+        movementAdapter = MovementListAdapter(mutableListOf(), this)
         rv.adapter = movementAdapter
     }
 

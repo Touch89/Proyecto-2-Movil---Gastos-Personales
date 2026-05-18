@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/white"
+    android:id="@+id/item_main_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/item_date"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="2025/07/25"/>
+
+            <ImageView
+                android:id="@+id/item_account_icon"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_back_24"
+                />
+
+            <TextView
+                android:id="@+id/item_account_name"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Efectivo"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"/>
+
+        <ImageView
+            android:id="@+id/item_category_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_24"
+            />
+
+        <TextView
+            android:id="@+id/item_category"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Ropa"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"/>
+
+        <TextView
+            android:id="@+id/item_amount"
+            android:layout_width="wrap_content"
+            android:maxWidth="70dp"
+            android:layout_height="wrap_content"
+            android:text="$300"/>
+
+        <ImageView
+            android:id="@+id/item_movement"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:contentDescription="Movement type"
+            android:src="@drawable/baseline_arrow_back_24"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
