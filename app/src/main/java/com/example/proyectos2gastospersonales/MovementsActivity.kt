@@ -390,7 +390,7 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
         super.onCreateContextMenu(menu, v, menuInfo)
         menuInflater.inflate(R.menu.movement_context_menu, menu)
 
-        val holder = rv.getChildViewHolder(v!!) as MovementAdapter.ViewHolder
+        val holder = rv.getChildViewHolder(v!!) as MovementListAdapter.ViewHolder
         itemPosition = holder.adapterPosition
     }
 
