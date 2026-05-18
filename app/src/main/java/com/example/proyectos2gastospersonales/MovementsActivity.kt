@@ -355,17 +355,15 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener, Po
         val itemMonthSpinner = findViewById<Spinner>(R.id.spinner_month)
 
         val selectedAccount = itemAccountSpinner.selectedItem.toString()
-        val sTypeAsEnum = if (selectedType == "Gasto") MovementType.Gasto else MovementType.Ingreso
-
         val selectedYear = itemYearSpinner.selectedItem.toString()
         val selectedMonth = String.format("%02d", itemMonthSpinner.selectedItemPosition + 1)
 
-        this.selectedType = selectedType
+        this.selectedAccount = selectedAccount
         this.selectedMonth = selectedMonth
         this.selectedYear = selectedYear
 
         if (selectedAccount == "Todas") {
-            movementsList = db.movementDao().getMovementsByDate(idUser, this.selectedYear, this.selectedMonth) as MutableList<MovementItemData>
+            movementsList = db.movementDao().getMovementsByDate(1, this.selectedYear, this.selectedMonth) as MutableList<MovementItemData>
             movementAdapter.updateMovements(movementsList)
         } else {
             movementsList = db.movementDao().getMovementsByDateByAccount(idUser, selectedType.toString(), this.selectedYear, this.selectedMonth) as MutableList<MovementItemData>

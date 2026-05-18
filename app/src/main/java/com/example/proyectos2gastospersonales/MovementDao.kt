@@ -90,10 +90,9 @@ interface MovementDao {
     @Query("""
         SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
         INNER JOIN accounts as ac ON account_id == ac.id
-        WHERE m.user_id = :userId
+        WHERE ac.user_id = :userId AND ac.name = :accountName
         AND strftime('%m', m.date / 1000, 'unixepoch') = :month
         AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
-        AND (:accountName = 'Todas' OR account_id = (SELECT id FROM accounts WHERE name = :accountName AND user_id = :userId))
         ORDER BY movDate DESC
     """)
     fun getMovementsByDateByAccount(userId: Int, accountName: String, year: String, month: String): List<MovementItemData>
