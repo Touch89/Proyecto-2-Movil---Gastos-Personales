@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/main"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/reallyLightGrey"
+  android:orientation="vertical"
+  tools:context=".AddMovementActivity">
+
+  <!-- Toolbar -->
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/orange"
+    android:orientation="horizontal">
+
+    <Space
+      android:layout_width="10dp"
+      android:layout_height="match_parent" />
+
+    <ImageButton
+      android:id="@+id/back_button"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:background="@color/orange"
+      android:contentDescription="Regresar"
+      android:minWidth="40dp"
+      android:src="@drawable/baseline_arrow_back_24" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="20dp"
+      android:text="Agregar movimiento"
+      android:textColor="@color/black"
+      android:textSize="22sp" />
+
+    <Space
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="5" />
+
+  </LinearLayout>
+
+  <!-- Contenido desplazable -->
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <!-- Spinner Tipo -->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Tipo:"
+          android:textColor="@color/black"
+          android:textSize="12sp" />
+
+        <Spinner
+          android:id="@+id/spinner_type"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+      </LinearLayout>
+
+      <!-- Campo Cantidad -->
+      <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Cantidad:"
+        app:prefixText="$ ">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/et_amount"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="numberDecimal" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <!-- ===== SECCIÓN INGRESO / GASTO ===== -->
+      <LinearLayout
+        android:id="@+id/section_ingreso_gasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <!-- Spinner Cuenta (con icono) -->
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/white"
+          android:orientation="vertical"
+          android:padding="8dp">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cuenta:"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:id="@+id/icon_cuenta"
+              android:layout_width="32dp"
+              android:layout_height="32dp"
+              android:layout_marginEnd="8dp"
+              android:contentDescription="Ícono de cuenta"
+              android:src="@drawable/ic_android_black_24dp" />
+
+            <Spinner
+              android:id="@+id/spinner_cuenta"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Spinner Categoría (con icono) -->
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/white"
+          android:orientation="vertical"
+          android:padding="8dp">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categoría:"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:id="@+id/icon_categoria"
+              android:layout_width="32dp"
+              android:layout_height="32dp"
+              android:layout_marginEnd="8dp"
+              android:contentDescription="Ícono de categoría"
+              android:src="@drawable/ic_android_black_24dp" />
+
+            <Spinner
+              android:id="@+id/spinner_categoria"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+      </LinearLayout>
+      <!-- ===== FIN SECCIÓN INGRESO / GASTO ===== -->
+
+      <!-- ===== SECCIÓN TRANSFERENCIA ===== -->
+      <LinearLayout
+        android:id="@+id/section_transferencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!-- Spinner Cuenta Origen (con icono) -->
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/white"
+          android:orientation="vertical"
+          android:padding="8dp">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cuenta origen:"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:id="@+id/icon_cuenta_origen"
+              android:layout_width="32dp"
+              android:layout_height="32dp"
+              android:layout_marginEnd="8dp"
+              android:contentDescription="Ícono de cuenta origen"
+              android:src="@drawable/ic_android_black_24dp" />
+
+            <Spinner
+              android:id="@+id/spinner_cuenta_origen"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Spinner Cuenta Destino (con icono) -->
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/white"
+          android:orientation="vertical"
+          android:padding="8dp">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cuenta destino:"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:id="@+id/icon_cuenta_destino"
+              android:layout_width="32dp"
+              android:layout_height="32dp"
+              android:layout_marginEnd="8dp"
+              android:contentDescription="Ícono de cuenta destino"
+              android:src="@drawable/ic_android_black_24dp" />
+
+            <Spinner
+              android:id="@+id/spinner_cuenta_destino"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+      </LinearLayout>
+      <!-- ===== FIN SECCIÓN TRANSFERENCIA ===== -->
+
+      <!-- Campo Descripción -->
+      <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Descripción (opcional)">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/et_description"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="text"
+          android:imeOptions="actionDone"
+          android:maxLines="1" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <!-- Campo Fecha con DatePicker -->
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_fecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Fecha:"
+        app:endIconDrawable="@drawable/ic_android_black_24dp"
+        app:endIconMode="custom">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/et_fecha"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:focusable="false"
+          android:inputType="none" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <!-- Botón Guardar -->
+      <Button
+        android:id="@+id/btn_guardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/orange"
+        android:text="Guardar"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp" />
+
+    </LinearLayout>
+
+  </ScrollView>
+
+</LinearLayout>
