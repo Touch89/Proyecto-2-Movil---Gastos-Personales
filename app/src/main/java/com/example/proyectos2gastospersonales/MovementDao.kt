@@ -81,6 +81,33 @@ interface MovementDao {
     @Query("SELECT * FROM movements WHERE id = :id")
     fun getMovement(id: Int): Movement
 
+    @Query("SELECT COALESCE(MAX(id), 0) + 1 FROM movements")
+    fun getNextId(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovement(vararg movement: Movement)
+
+    // Suma total de un tipo de movimiento en un mes/año, filtrado opcionalmente por cuenta
+    @Query("""
+        SELECT COALESCE(SUM(amount), 0.0) FROM movements
+        WHERE user_id = :userId
+          AND type = :type
+          AND strftime('%m', date / 1000, 'unixepoch') = :month
+          AND strftime('%Y', date / 1000, 'unixepoch') = :year
+          AND (:accountName = 'Todas' OR account_id = (SELECT id FROM accounts WHERE name = :accountName AND user_id = :userId))
+    """)
+    fun getTotalByType(userId: Int, accountName: String, type: MovementType, month: String, year: String): Double?
+
+    // Suma total de un tipo de movimiento ANTES del mes/año indicado (para calcular saldo anterior)
+    @Query("""
+        SELECT COALESCE(SUM(amount), 0.0) FROM movements
+        WHERE user_id = :userId
+          AND type = :type
+          AND (
+              strftime('%Y', date / 1000, 'unixepoch') < :year
+              OR (strftime('%Y', date / 1000, 'unixepoch') = :year AND strftime('%m', date / 1000, 'unixepoch') < :month)
+          )
+          AND (:accountName = 'Todas' OR account_id = (SELECT id FROM accounts WHERE name = :accountName AND user_id = :userId))
+    """)
+    fun getTotalByTypeBeforeMonth(userId: Int, accountName: String, type: MovementType, month: String, year: String): Double?
 }
