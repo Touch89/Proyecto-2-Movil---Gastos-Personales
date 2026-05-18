@@ -12,6 +12,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proyectos2GastosPersonales">
         <activity
+            android:name=".AccountsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoriesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddEditAccountActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight.Dialog" />
+        <activity
+            android:name=".AddMovementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoryDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportByCategoriesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
