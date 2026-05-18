@@ -104,6 +104,10 @@ class RegisterActivity : AppCompatActivity() {
                 emailTextLayout.error = "Este campo es obligatorio"
                 userValid = false }
 
+            if (!email.isValidEmail()){
+                emailTextLayout.error = "Ingrese un email válido"
+                userValid = false }
+
             if (password.isEmpty()) {
                 passwordTextLayout.error = "Este campo es obligatorio"
                 userValid = false }
@@ -142,5 +146,9 @@ class RegisterActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    fun String.isValidEmail(): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 }
