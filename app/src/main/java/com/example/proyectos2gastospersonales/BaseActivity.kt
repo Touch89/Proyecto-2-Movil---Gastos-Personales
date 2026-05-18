@@ -56,34 +56,34 @@ open class BaseActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_accounts-> {
-                    if(javaClass != MainActivity::class.java){
-                        val intent = Intent(this, MainActivity::class.java)
+                    if(javaClass != AccountsActivity::class.java){
+                        val intent = Intent(this, AccountsActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
 
                 R.id.nav_categories -> {
-                    if(javaClass != MainActivity::class.java){
-                        val intent = Intent(this, MainActivity::class.java)
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
 
                 R.id.nav_help -> {
-                    if(javaClass != MainActivity::class.java){
-                        val intent = Intent(this, MainActivity::class.java)
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
 
                 R.id.nav_about -> {
-                    if(javaClass != MainActivity::class.java){
-                        val intent = Intent(this, MainActivity::class.java)
+                    if(javaClass != AboutUsActivity::class.java){
+                        val intent = Intent(this, AboutUsActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
             }

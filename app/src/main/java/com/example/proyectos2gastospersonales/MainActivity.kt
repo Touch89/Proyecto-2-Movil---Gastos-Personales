@@ -50,8 +50,20 @@ class HomeCategoryAdapter(
             }
             itemImage.setImageResource(
                 when (category.icon) {
+                    201 -> R.drawable.baseline_shopping_cart_24
+                    202 -> R.drawable.baseline_directions_car_24
+                    203 -> R.drawable.baseline_restaurant_24
+                    204 -> R.drawable.baseline_home_24
+                    205 -> R.drawable.baseline_computer_24
+                    206 -> R.drawable.baseline_pets_24
+                    207 -> R.drawable.baseline_school_24
+                    208 -> R.drawable.baseline_medical_services_24
+                    209 -> R.drawable.baseline_shopping_bag_24
+                    210 -> R.drawable.baseline_work_24
+
                     0 -> R.drawable.ic_android_black_24dp
                     1 -> R.drawable.outline_1k_24
+
                     else -> R.drawable.ic_launcher_foreground
                 }
             )
@@ -78,7 +90,7 @@ class HomeCategoryAdapter(
     }
 }
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     val idUser = 1 // TEMPORAL
 
@@ -113,7 +125,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Views
+        setupDrawer("Gastos Personales", R.layout.activity_main)
+        setSelectedItem(R.id.nav_home)
+
         spinnerAccount = findViewById(R.id.spinner_account)
         spinnerYear = findViewById(R.id.spinner_year)
         spinnerMonth = findViewById(R.id.spinner_month)

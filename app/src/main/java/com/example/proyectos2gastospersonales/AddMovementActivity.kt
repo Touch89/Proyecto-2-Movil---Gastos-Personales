@@ -178,6 +178,26 @@ class AddMovementActivity : AppCompatActivity(), AdapterView.OnItemSelectedListe
     }
 
     private fun getIconResource(icon: Int): Int = when (icon) {
+        101 -> R.drawable.baseline_account_balance_wallet_24
+        102 -> R.drawable.baseline_credit_card_24
+        103 -> R.drawable.baseline_payment_24
+        104 -> R.drawable.baseline_account_balance_24
+        105 -> R.drawable.baseline_savings_24
+        106 -> R.drawable.baseline_local_activity_24
+        107 -> R.drawable.baseline_phone_android_24
+        108 -> R.drawable.baseline_trending_up_24
+        109 -> R.drawable.baseline_lock_24
+        110 -> R.drawable.baseline_monetization_on_24
+        201 -> R.drawable.baseline_shopping_cart_24
+        202 -> R.drawable.baseline_directions_car_24
+        203 -> R.drawable.baseline_restaurant_24
+        204 -> R.drawable.baseline_home_24
+        205 -> R.drawable.baseline_computer_24
+        206 -> R.drawable.baseline_pets_24
+        207 -> R.drawable.baseline_school_24
+        208 -> R.drawable.baseline_medical_services_24
+        209 -> R.drawable.baseline_shopping_bag_24
+        210 -> R.drawable.baseline_work_24
         0 -> R.drawable.ic_android_black_24dp
         1 -> R.drawable.outline_1k_24
         else -> R.drawable.ic_launcher_foreground
