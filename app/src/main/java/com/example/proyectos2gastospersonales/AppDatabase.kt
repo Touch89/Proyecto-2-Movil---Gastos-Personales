@@ -50,51 +50,51 @@ abstract class AppDatabase : RoomDatabase() {
                     INSERT INTO users (id, email, username, password, avatar) VALUES
                     (1, 'carlos@example.com', 'carlos_dev', 'password123', 1),
                     (2, 'ana@example.com', 'ana_finanzas', 'password456', 2)
-                """
+                    """
                 )
 
                 db.execSQL(
                     """
                     INSERT INTO categories (id, name, icon, user_id) VALUES
-                    (1, 'Alimentación', 201, 1),
-                    (2, 'Transporte', 202, 1),
-                    (3, 'Salario', 203, 1),
-                    (4, 'Entretenimiento', 204, 1),
-                    (5, 'Transferencias', 205, 1)
-                """
+                    (1, 'Alimentación', 201, 1),    -- 201: Supermercado / Despensa
+                    (2, 'Transporte', 202, 1),      -- 202: Auto / Transporte
+                    (3, 'Salario', 210, 1),         -- 210: Billetes / Ingresos
+                    (4, 'Entretenimiento', 205, 1), -- 205: Computadora 
+                    (5, 'Transferencias', 204, 1)   -- 204: Casa 
+                    """
                 )
 
                 db.execSQL(
                     """
                     INSERT INTO accounts (id, name, description, icon, user_id) VALUES
-                    (1, 'Efectivo', 'Billetera física', 101, 1),
-                    (2, 'Cuenta Débito', 'Tarjeta principal del banco', 102, 1),
-                    (3, 'Ahorros', 'Fondo de emergencia', 103, 1)
-                """
+                    (1, 'Efectivo', 'Billetera física en pesos', 101, 1),             -- 101: Billetera
+                    (2, 'Cuenta Débito', 'Tarjeta principal del banco', 102, 1),      -- 102: Tarjeta genérica
+                    (3, 'Ahorros', 'Fondo de emergencia', 105, 1)                     -- 105: Alcancía de cerdito
+                    """
                 )
 
                 db.execSQL(
                     """
-    INSERT INTO movements (id, type, amount, account_id, category_id, description, date, origin_account_id, destiny_account_id, user_id) VALUES
-    -- Octubre
-    (1, 'Ingreso', 15000.0, 2, 3, 'Quincena', ${java.sql.Date.valueOf("2023-10-15").time}, NULL, NULL, 1),
-    (2, 'Gasto', 350.0, 1, 1, 'Cena familiar', ${java.sql.Date.valueOf("2023-10-16").time}, NULL, NULL, 1),
-    (3, 'Gasto', 120.5, 2, 2, 'Viaje al trabajo', ${java.sql.Date.valueOf("2023-10-17").time}, NULL, NULL, 1),
-    (4, 'Transferencia', 2000.0, 2, 5, 'Ahorro mensual', ${java.sql.Date.valueOf("2023-10-18").time}, 2, 3, 1),
-    (5, 'Gasto', 1200.0, 2, 1, 'Despensa en el supermercado', ${java.sql.Date.valueOf("2023-10-20").time}, NULL, NULL, 1),
-    (6, 'Gasto', 450.0, 1, 4, 'Salida al cine', ${java.sql.Date.valueOf("2023-10-22").time}, NULL, NULL, 1),
-    (7, 'Gasto', 600.0, 2, 2, 'Gasolina', ${java.sql.Date.valueOf("2023-10-25").time}, NULL, NULL, 1),
-    (8, 'Ingreso', 15000.0, 2, 3, 'Quincena', ${java.sql.Date.valueOf("2023-10-31").time}, NULL, NULL, 1),
-
-    -- Noviembre
-    (9, 'Transferencia', 3000.0, 2, 5, 'Ahorro mensual', ${java.sql.Date.valueOf("2023-11-01").time}, 2, 3, 1),
-    (10, 'Gasto', 250.0, 1, 1, 'Desayuno en cafetería', ${java.sql.Date.valueOf("2023-11-03").time}, NULL, NULL, 1),
-    (11, 'Gasto', 800.0, 2, 4, 'Suscripciones y videojuegos', ${java.sql.Date.valueOf("2023-11-05").time}, NULL, NULL, 1),
-    (12, 'Gasto', 1500.0, 2, 1, 'Despensa mayor', ${java.sql.Date.valueOf("2023-11-10").time}, NULL, NULL, 1),
-    (13, 'Ingreso', 15000.0, 2, 3, 'Quincena', ${java.sql.Date.valueOf("2023-11-15").time}, NULL, NULL, 1),
-    (14, 'Transferencia', 500.0, 3, 5, 'Retiro de emergencia', ${java.sql.Date.valueOf("2023-11-18").time}, 3, 1, 1),
-    (15, 'Gasto', 300.0, 1, 2, 'Taxis fin de semana', ${java.sql.Date.valueOf("2023-11-20").time}, NULL, NULL, 1)
-"""
+                    INSERT INTO movements (id, type, amount, account_id, category_id, description, date, origin_account_id, destiny_account_id, user_id) VALUES
+                    -- Octubre
+                    (1, 'Ingreso', 15000.0, 2, 3, 'Quincena', ${java.sql.Date.valueOf("2023-10-15").time}, NULL, NULL, 1),
+                    (2, 'Gasto', 350.0, 1, 1, 'Cena familiar', ${java.sql.Date.valueOf("2023-10-16").time}, NULL, NULL, 1),
+                    (3, 'Gasto', 120.5, 2, 2, 'Viaje al trabajo', ${java.sql.Date.valueOf("2023-10-17").time}, NULL, NULL, 1),
+                    (4, 'Transferencia', 2000.0, 2, 5, 'Ahorro mensual', ${java.sql.Date.valueOf("2023-10-18").time}, 2, 3, 1),
+                    (5, 'Gasto', 1200.0, 2, 1, 'Despensa en el supermercado', ${java.sql.Date.valueOf("2023-10-20").time}, NULL, NULL, 1),
+                    (6, 'Gasto', 450.0, 1, 4, 'Salida al cine', ${java.sql.Date.valueOf("2023-10-22").time}, NULL, NULL, 1),
+                    (7, 'Gasto', 600.0, 2, 2, 'Gasolina', ${java.sql.Date.valueOf("2023-10-25").time}, NULL, NULL, 1),
+                    (8, 'Ingreso', 15000.0, 2, 3, 'Quincena', ${java.sql.Date.valueOf("2023-10-31").time}, NULL, NULL, 1),
+                
+                    -- Noviembre
+                    (9, 'Transferencia', 3000.0, 2, 5, 'Ahorro mensual', ${java.sql.Date.valueOf("2023-11-01").time}, 2, 3, 1),
+                    (10, 'Gasto', 250.0, 1, 1, 'Desayuno en cafetería', ${java.sql.Date.valueOf("2023-11-03").time}, NULL, NULL, 1),
+                    (11, 'Gasto', 800.0, 2, 4, 'Suscripciones y videojuegos', ${java.sql.Date.valueOf("2023-11-05").time}, NULL, NULL, 1),
+                    (12, 'Gasto', 1500.0, 2, 1, 'Despensa mayor', ${java.sql.Date.valueOf("2023-11-10").time}, NULL, NULL, 1),
+                    (13, 'Ingreso', 15000.0, 2, 3, 'Quincena', ${java.sql.Date.valueOf("2023-11-15").time}, NULL, NULL, 1),
+                    (14, 'Transferencia', 500.0, 3, 5, 'Retiro de emergencia', ${java.sql.Date.valueOf("2023-11-18").time}, 3, 1, 1),
+                    (15, 'Gasto', 300.0, 1, 2, 'Taxis fin de semana', ${java.sql.Date.valueOf("2023-11-20").time}, NULL, NULL, 1)
+                    """
                 )
             }
         }

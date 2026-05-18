@@ -58,26 +58,42 @@ open class BaseActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_movements -> {
-                    if(javaClass != AddMovementActivity::class.java){
-                        val intent = Intent(this, AddMovementActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                }
-
-                R.id.nav_categories -> {
-                    if(javaClass != ReportByCategoriesActivity::class.java){
-                        val intent = Intent(this, ReportByCategoriesActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                }
-
-                R.id.nav_about -> {
                     if(javaClass != MainActivity::class.java){
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
+                    }
+                }
+
+                R.id.nav_accounts-> {
+                    if(javaClass != AccountsActivity::class.java){
+                        val intent = Intent(this, AccountsActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                R.id.nav_categories -> {
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                R.id.nav_help -> {
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                R.id.nav_about -> {
+                    if(javaClass != AboutUsActivity::class.java){
+                        val intent = Intent(this, AboutUsActivity::class.java)
+                        startActivity(intent)
+                        //finish()
                     }
                 }
             }
