@@ -32,7 +32,8 @@
                 android:background="@color/orange"
                 android:contentDescription="Regresar a la pantalla anterior"
                 android:minWidth="40dp"
-                android:src="@drawable/baseline_arrow_back_24" />
+                android:src="@drawable/baseline_arrow_back_24"
+                android:id="@+id/rbc_backButton"/>
 
             <TextView
                 android:layout_width="wrap_content"

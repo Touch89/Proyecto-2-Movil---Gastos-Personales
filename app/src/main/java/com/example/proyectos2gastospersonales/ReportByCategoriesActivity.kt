@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Spinner
@@ -109,14 +110,18 @@ class CategoryAdapter(
 
 class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    val idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
-    private val accountId = 1 //TEMPORAL
+    var idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
+    var accountId = 1 //TEMPORAL
     var selectedMonth = "0"
     var selectedYear = "1970"
     var selectedType = "Gasto"
+    var selectedAccount = "Todas"
+
+
     val db by lazy { AppDatabase.getDatabase(this) }
     private lateinit var rv: RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var backButton: ImageButton
     private val spinnerType = arrayOf(
         "Gasto", "Ingreso"
     )
@@ -170,6 +175,17 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
 
         val itemMonthSpinner = findViewById<Spinner>(R.id.spinner_month)
 
+        this.idUser = intent.getIntExtra("user_id", 1)
+        val passedYear = intent.getStringExtra("selected_year")
+        val passedMonth = intent.getStringExtra("selected_month")
+        val passedAccount = intent.getStringExtra("selected_account")
+
+        backButton = findViewById(R.id.rbc_backButton)
+
+        backButton.setOnClickListener {
+            finish()
+        }
+
         val typeAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
             this,
             android.R.layout.simple_spinner_item, spinnerType
@@ -215,6 +231,26 @@ class ReportByCategoriesActivity : AppCompatActivity(), AdapterView.OnItemSelect
         itemYearSpinner.onItemSelectedListener = this
         itemMonthSpinner.onItemSelectedListener = this
         //Por si acaso https://www.geeksforgeeks.org/android/how-to-set-the-selected-item-of-spinner-by-value-and-not-by-position-in-android/
+
+        if (passedYear != null) {
+            val year = passedYear.toIntOrNull()
+            val position = spinnerYear.indexOf(year)
+            if (position >= 0) itemYearSpinner.setSelection(position)
+        }
+
+        if (passedMonth != null) {
+            val month = (passedMonth.toIntOrNull() ?: 1) - 1
+            if (month in spinnerMonth.indices) {
+                itemMonthSpinner.setSelection(month)
+            }
+        }
+
+        if (passedAccount != null) {
+            val accountPosition = accountNameList.indexOf(passedAccount)
+            if (accountPosition >= 0) {
+                itemAccountSpinner.setSelection(accountPosition)
+            }
+        }
 
         categoryAdapter = CategoryAdapter(mutableListOf(), this)
         rv.adapter = categoryAdapter

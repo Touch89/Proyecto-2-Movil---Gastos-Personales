@@ -130,8 +130,14 @@ class MainActivity : AppCompatActivity() {
 
         categoryAdapter = HomeCategoryAdapter(mutableListOf()) { category ->
             val intent = Intent(this, ReportByCategoriesActivity::class.java)
+            val selectedYear = spinnerYear.selectedItem?.toString() ?: "2026"
+            val selectedMonth = String.format("%02d", spinnerMonth.selectedItemPosition + 1)
+            val selectedAccount = spinnerAccount.selectedItem?.toString() ?: "Todas"
             intent.putExtra("user_id", idUser)
             intent.putExtra("category_name", category.name)
+            intent.putExtra("selected_year", selectedYear)
+            intent.putExtra("selected_month", selectedMonth)
+            intent.putExtra("selected_account", selectedAccount)
             startActivity(intent)
         }
         rv.adapter = categoryAdapter
