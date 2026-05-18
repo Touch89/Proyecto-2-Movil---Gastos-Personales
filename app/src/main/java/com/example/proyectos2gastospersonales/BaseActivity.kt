@@ -35,8 +35,8 @@ open class BaseActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.nav_view)
         toolbar = findViewById(R.id.topAppBar)
 
-        navigationView.menu.findItem(R.id.nav_accounts).isEnabled = false
-        navigationView.menu.findItem(R.id.nav_help).isEnabled = false
+        //navigationView.menu.findItem(R.id.nav_accounts).isEnabled = false
+        //navigationView.menu.findItem(R.id.nav_help).isEnabled = false
 
         toolbar.title = title
 
@@ -61,13 +61,29 @@ open class BaseActivity : AppCompatActivity() {
                     if(javaClass != AddMovementActivity::class.java){
                         val intent = Intent(this, AddMovementActivity::class.java)
                         startActivity(intent)
+                        finish()
+                    }
+                }
+
+                R.id.nav_accounts-> {
+                    if(javaClass != AccountsActivity::class.java){
+                        val intent = Intent(this, AccountsActivity::class.java)
+                        startActivity(intent)
                         //finish()
                     }
                 }
 
                 R.id.nav_categories -> {
-                    if(javaClass != ReportByCategoriesActivity::class.java){
-                        val intent = Intent(this, ReportByCategoriesActivity::class.java)
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                R.id.nav_help -> {
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
                         startActivity(intent)
                         //finish()
                     }
