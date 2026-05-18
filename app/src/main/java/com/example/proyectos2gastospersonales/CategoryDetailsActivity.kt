@@ -36,7 +36,7 @@ data class MovementItemData(
 
 class MovementAdapter(
     private val movement: MutableList<MovementItemData>,
-    val activity: CategoryDetailsActivity
+    val activity: AppCompatActivity
 ) :
     RecyclerView.Adapter<MovementAdapter.ViewHolder>() {
 
@@ -260,7 +260,7 @@ class CategoryDetailsActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickLi
             db.movementDao().deleteMovementById(tempMovement.movId)
             // Agarrar la id del mov, guardar una copia del mov y luego hacer el insert a la bdd***
             movementsList.removeAt(itemPosition)
-            movementAdapter.notifyDataSetChanged()
+            movementAdapter.notifyItemRemoved(tempPosition)
             updateAmount()
 
             val snackbar = Snackbar

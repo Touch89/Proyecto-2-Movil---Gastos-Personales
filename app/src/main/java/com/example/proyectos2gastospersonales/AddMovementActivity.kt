@@ -61,7 +61,7 @@ class AddMovementActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             insets
         }
 
-        setupDrawer("Movimientos", R.layout.activity_add_movement)
+        //setupDrawer("Movimientos", R.layout.activity_add_movement)
 
         val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
 

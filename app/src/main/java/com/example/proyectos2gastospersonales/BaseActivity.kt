@@ -58,8 +58,8 @@ open class BaseActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_movements -> {
-                    if(javaClass != AddMovementActivity::class.java){
-                        val intent = Intent(this, AddMovementActivity::class.java)
+                    if(javaClass != MovementsActivity::class.java){
+                        val intent = Intent(this, MovementsActivity::class.java)
                         startActivity(intent)
                         //finish()
                     }

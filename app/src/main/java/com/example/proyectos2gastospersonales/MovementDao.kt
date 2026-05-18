@@ -78,6 +78,34 @@ interface MovementDao {
     """)
     fun getMovementsTotalSum(userId: Int, categoryName: String, type: MovementType, year: String, month: String): Double
 
+    @Query("""
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        INNER JOIN accounts as ac ON account_id == ac.id
+        WHERE m.user_id = :userId
+        AND strftime('%m', m.date / 1000, 'unixepoch') = :month
+        AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
+        ORDER BY movDate DESC
+    """)
+    fun getMovementsByDate(userId: Int, year: String, month: String): List<MovementItemData>
+    @Query("""
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        INNER JOIN accounts as ac ON account_id == ac.id
+        WHERE m.user_id = :userId
+        AND strftime('%m', m.date / 1000, 'unixepoch') = :month
+        AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
+        AND (:accountName = 'Todas' OR account_id = (SELECT id FROM accounts WHERE name = :accountName AND user_id = :userId))
+        ORDER BY movDate DESC
+    """)
+    fun getMovementsByDateByAccount(userId: Int, accountName: String, year: String, month: String): List<MovementItemData>
+    @Query("""
+        SELECT m.id as movId, ac.icon as accIcon, ac.name as accName, m.date as movDate, m.description movDesc, m.amount as movAmount FROM movements as m
+        INNER JOIN accounts as ac ON account_id == ac.id
+        WHERE m.user_id = :userId
+        AND strftime('%m', m.date / 1000, 'unixepoch') = :month
+        AND strftime('%Y', m.date / 1000, 'unixepoch') = :year
+        ORDER BY movAmount DESC
+    """)
+    fun getMovementsByAmount(userId: Int, year: String, month: String): List<MovementItemData>
     @Query("SELECT * FROM movements WHERE id = :id")
     fun getMovement(id: Int): Movement
 
