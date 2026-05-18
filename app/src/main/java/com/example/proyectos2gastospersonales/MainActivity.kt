@@ -92,7 +92,7 @@ class HomeCategoryAdapter(
 
 class MainActivity : BaseActivity() {
 
-    val idUser = 1 // TEMPORAL
+    var idUser = 1 // TEMPORAL
 
     val db by lazy { AppDatabase.getDatabase(this) }
 
@@ -125,9 +125,13 @@ class MainActivity : BaseActivity() {
             insets
         }
 
-        setupDrawer("Gastos Personales", R.layout.activity_main)
-        setSelectedItem(R.id.nav_home)
+        setupDrawer("Inicio", R.layout.activity_main)
 
+        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+
+        idUser = sharedPreferences.getInt("user_id", -1)
+
+        // Views
         spinnerAccount = findViewById(R.id.spinner_account)
         spinnerYear = findViewById(R.id.spinner_year)
         spinnerMonth = findViewById(R.id.spinner_month)
@@ -157,9 +161,9 @@ class MainActivity : BaseActivity() {
         rv.adapter = categoryAdapter
 
         // Spinner cuentas
-        val userAccounts = db.accountDao().getAccountsFromUser(idUser)
+        val userAccounts = db.accountDao().getAccountsFromUser(idUser)?.accounts ?: emptyList()
         val accountNames = mutableListOf("Todas")
-        userAccounts.accounts.forEach { accountNames.add(it.name) }
+        userAccounts.forEach { accountNames.add(it.name) }
         val accountAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, accountNames)
         accountAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerAccount.adapter = accountAdapter

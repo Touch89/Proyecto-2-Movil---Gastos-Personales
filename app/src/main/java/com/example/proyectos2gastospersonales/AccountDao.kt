@@ -19,5 +19,5 @@ interface AccountDao {
     fun getUsersWithAccounts(): List<UserWithAccounts>
     @Transaction
     @Query("SELECT * FROM users WHERE id = :userId")
-    fun getAccountsFromUser(userId: Int): UserWithAccounts
+    fun getAccountsFromUser(userId: Int): UserWithAccounts?
 }

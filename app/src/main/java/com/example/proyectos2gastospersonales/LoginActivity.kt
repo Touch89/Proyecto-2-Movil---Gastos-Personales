@@ -3,7 +3,6 @@ package com.example.proyectos2gastospersonales
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +10,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var db : AppDatabase
-    private lateinit var emailTextInput : EditText
-    private lateinit var passwordTextInput : EditText
+    private lateinit var emailTextLayout: TextInputLayout
+    private lateinit var passwordTextLayout: TextInputLayout
+    private lateinit var emailTextInput : TextInputEditText
+    private lateinit var passwordTextInput : TextInputEditText
     private lateinit var loginButton : Button
     private lateinit var registerButton : Button
 
@@ -30,6 +33,18 @@ class Login : AppCompatActivity() {
             insets
         }
 
+        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("user_id", -1)
+
+        // SI LA SESIÓN EXISTE
+        if (userId != -1){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+
+            return
+        }
+
         db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "testapp")
             .allowMainThreadQueries()
             .addCallback(object : RoomDatabase.Callback() {
@@ -37,8 +52,10 @@ class Login : AppCompatActivity() {
             })
             .build()
 
-        emailTextInput = findViewById(R.id.email_txtb)
-        passwordTextInput = findViewById(R.id.password_txtb)
+        emailTextLayout = findViewById(R.id.email_txtb)
+        passwordTextLayout = findViewById(R.id.password_txtb)
+        emailTextInput = findViewById(R.id.email_input)
+        passwordTextInput = findViewById(R.id.password_input)
         loginButton = findViewById(R.id.login_button)
         registerButton = findViewById(R.id.register_button)
 
@@ -55,12 +72,16 @@ class Login : AppCompatActivity() {
 
                 val user = db.userDao().getUserByEmail(email)
                 if (user == null) {
-                    emailTextInput.error = "Email incorrecto"
+                    emailTextLayout.error = "Email incorrecto"
                 } else if (user.password != password) {
-                    passwordTextInput.error = "Contraseña incorrecta"
+                    passwordTextLayout.error = "Contraseña incorrecta"
                 }
                 else {
-                    // val intent = Intent(this, GameActivity::class.java)
+                    val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+
+                    sharedPreferences.edit().putInt("user_id", user.id).apply()
+
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -68,7 +89,7 @@ class Login : AppCompatActivity() {
         }
 
         registerButton.setOnClickListener { _ ->
-            val intent = Intent(this, Register::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }

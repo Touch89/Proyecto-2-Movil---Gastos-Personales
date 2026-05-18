@@ -8,11 +8,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".Login">
+    tools:context=".LoginActivity">
 
   <ImageView
-      android:layout_width="180dp"
-      android:layout_height="180dp"/>
+      android:layout_width="140dp"
+      android:layout_height="140dp"
+      android:layout_marginBottom="24dp"
+      android:src="@drawable/app_icon"/>
 
   <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/email_txtb"
@@ -22,6 +24,7 @@
       app:startIconDrawable="@drawable/outline_email_24">
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="emailAddress"
@@ -41,6 +44,7 @@
       app:startIconDrawable="@drawable/outline_lock_24">
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="password"
