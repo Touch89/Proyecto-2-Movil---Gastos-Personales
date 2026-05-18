@@ -96,7 +96,7 @@ class AddMovementActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
         // Cargar datos desde la BD
         accounts = db.accountDao().getAccountsFromUser(idUser)?.accounts ?: emptyList()
-        categories = db.categoryDao().getAllCategoriesFromUser(idUser).categories
+        categories = db.categoryDao().getAllCategoriesFromUser(idUser)?.categories ?: emptyList()
 
         setupSpinnerTipo(initialType)
         setupSpinnersCuenta()

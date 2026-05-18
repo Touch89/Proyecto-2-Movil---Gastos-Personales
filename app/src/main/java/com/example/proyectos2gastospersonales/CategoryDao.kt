@@ -19,7 +19,7 @@ interface CategoryDao {
     fun getUsersWithCategories(): List<UserWithCategories>
 
     @Query("SELECT * FROM users WHERE id = :userId")
-    fun getAllCategoriesFromUser(userId: Int): UserWithCategories
+    fun getAllCategoriesFromUser(userId: Int): UserWithCategories?
 
     @Transaction
     @Query(

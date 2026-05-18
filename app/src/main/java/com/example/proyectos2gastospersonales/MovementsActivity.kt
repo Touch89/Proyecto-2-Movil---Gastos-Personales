@@ -140,8 +140,7 @@ class MovementListAdapter(
 class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
     PopupMenu.OnMenuItemClickListener {
 
-    var idUser =
-        1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
+    var idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
     var accountId = 1 //TEMPORAL
     var selectedMonth = "0"
     var selectedYear = "1970"
@@ -185,6 +184,9 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
             insets
         }
 
+        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
+        idUser = sharedPreferences.getInt("user_id", -1)
+
         setupDrawer("Movimientos", R.layout.activity_movements)
 
         val userAccounts = db.accountDao().getAccountsFromUser(idUser)?.accounts ?: emptyList()
@@ -210,9 +212,6 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
         val itemYearSpinner = findViewById<Spinner>(R.id.spinner_year)
 
         val itemMonthSpinner = findViewById<Spinner>(R.id.spinner_month)
-
-        val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
-        idUser = sharedPreferences.getInt("user_id", -1)
 
         val passedYear = intent.getStringExtra("selected_year")
         val passedMonth = intent.getStringExtra("selected_month")
@@ -414,7 +413,7 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
 
         if (selectedAccount == "Todas") {
             movementsList = db.movementDao().getMovementsByDate(
-                1,
+                idUser,
                 this.selectedYear,
                 this.selectedMonth
             ) as MutableList<MovementItemData>
