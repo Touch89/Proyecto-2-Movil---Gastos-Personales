@@ -61,7 +61,7 @@ open class BaseActivity : AppCompatActivity() {
                     if(javaClass != AddMovementActivity::class.java){
                         val intent = Intent(this, AddMovementActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
 
@@ -69,15 +69,15 @@ open class BaseActivity : AppCompatActivity() {
                     if(javaClass != ReportByCategoriesActivity::class.java){
                         val intent = Intent(this, ReportByCategoriesActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
 
                 R.id.nav_about -> {
-                    if(javaClass != MainActivity::class.java){
-                        val intent = Intent(this, MainActivity::class.java)
+                    if(javaClass != AboutUsActivity::class.java){
+                        val intent = Intent(this, AboutUsActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
             }
