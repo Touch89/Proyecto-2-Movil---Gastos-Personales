@@ -239,8 +239,6 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
         movementAdapter = MovementListAdapter(movementsList, this)
         rv.adapter = movementAdapter
 
-        updateAmount()
-
         val typeAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
             this,
             android.R.layout.simple_spinner_item, spinnerType
@@ -451,7 +449,6 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
             db.movementDao().deleteMovementById(tempMovement.movId)
             movementsList.removeAt(itemPosition)
             movementAdapter.notifyDataSetChanged()
-            updateAmount()
 
             val snackbar = Snackbar
                 .make(rv, "Movimiento eliminado", Snackbar.LENGTH_LONG)
@@ -459,7 +456,6 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
                     movementsList.add(tempPosition, tempMovement)
                     db.movementDao().insertMovement(movCopy)
                     movementAdapter.notifyDataSetChanged()
-                    updateAmount()
                     Toast.makeText(
                         this,
                         "Movimiento restaurado",
@@ -475,6 +471,4 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
         }
     }
 
-    private fun updateAmount() {
-    }
 }
