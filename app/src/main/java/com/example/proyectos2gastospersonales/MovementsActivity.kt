@@ -1,5 +1,6 @@
 package com.example.proyectos2gastospersonales
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.LayoutInflater
@@ -140,7 +141,8 @@ class MovementListAdapter(
 class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
     PopupMenu.OnMenuItemClickListener {
 
-    var idUser = 1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
+    var idUser =
+        1 //TEMPORAL, si la llaman userId y la dejan pública la app se muere, ni idea de por qué
     var accountId = 1 //TEMPORAL
     var selectedMonth = "0"
     var selectedYear = "1970"
@@ -438,7 +440,17 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
 
     override fun onContextItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_modify -> {
-            // TODO
+            if (movementsList[itemPosition].type == MovementType.Transferencia) {
+                Toast.makeText(
+                    this,
+                    "No se pueden modificar transferencias.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val intent = Intent(this, ModifyMovementActivity::class.java)
+                intent.putExtra("movement_id", movementsList[itemPosition].movId)
+                startActivity(intent)
+            }
             true
         }
 
@@ -448,7 +460,7 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
             val movCopy: Movement = db.movementDao().getMovement(tempMovement.movId)
             db.movementDao().deleteMovementById(tempMovement.movId)
             movementsList.removeAt(itemPosition)
-            movementAdapter.notifyDataSetChanged()
+            movementAdapter.notifyItemRemoved(itemPosition)
 
             val snackbar = Snackbar
                 .make(rv, "Movimiento eliminado", Snackbar.LENGTH_LONG)
@@ -470,5 +482,4 @@ class MovementsActivity : BaseActivity(), AdapterView.OnItemSelectedListener,
             super.onContextItemSelected(item)
         }
     }
-
 }

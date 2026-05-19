@@ -137,4 +137,7 @@ interface MovementDao {
           AND (:accountName = 'Todas' OR account_id = (SELECT id FROM accounts WHERE name = :accountName AND user_id = :userId))
     """)
     fun getTotalByTypeBeforeMonth(userId: Int, accountName: String, type: MovementType, month: String, year: String): Double?
+
+    @Update
+    fun updateMovement(movement: Movement)
 }

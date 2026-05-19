@@ -31,6 +31,9 @@
             android:name=".MovementsActivity"
             android:exported="false" />
         <activity
+            android:name=".ModifyMovementActivity"
+            android:exported="false" />
+        <activity
             android:name=".CategoryDetailsActivity"
             android:exported="false" />
         <activity
