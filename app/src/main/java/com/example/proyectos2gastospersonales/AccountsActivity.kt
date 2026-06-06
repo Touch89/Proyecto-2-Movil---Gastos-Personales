@@ -153,6 +153,8 @@ class AccountsActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
 
         appBarMenu.setOnClickListener { view -> showMenu(view) }
 
+        setupDrawer("Cuentas", R.layout.activity_accounts)
+
         rv = findViewById(R.id.accounts_rv)
         rv.layoutManager = LinearLayoutManager(this)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
@@ -189,7 +191,7 @@ class AccountsActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
 
     private fun cargarCuentas(){
         val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
-        idUser = sharedPreferences.getInt("user_id", -1)git
+        idUser = sharedPreferences.getInt("user_id", -1)
 
         val result = db.accountDao().getAccountsFromUser(userId = 1)
         val cuentas = result?.accounts ?: emptyList()
