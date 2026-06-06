@@ -140,4 +140,9 @@ interface MovementDao {
 
     @Update
     fun updateMovement(movement: Movement)
+
+    @Query("""SELECT COUNT(*) FROM movements WHERE account_id = :id
+        OR origin_account_id = :id OR destiny_account_id = :id
+    """)
+    suspend fun countMovementsByAccount(id: Int): Int
 }
