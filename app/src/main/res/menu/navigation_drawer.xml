@@ -36,6 +36,22 @@
     </group>
 
     <group
+        android:id="@+id/group_4"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_createGroup"
+            android:icon="@drawable/baseline_category_24"
+            android:title="Crear Grupo" />
+
+        <item
+            android:id="@+id/nav_joinGroup"
+            android:icon="@drawable/baseline_category_24"
+            android:title="Unirse a Grupo" />
+
+    </group>
+
+    <group
         android:id="@+id/group_3"
         android:checkableBehavior="single">
 

@@ -5,6 +5,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -12,6 +13,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.database
+import com.google.firebase.database.getValue
+import com.google.firebase.database.ValueEventListener
 
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
@@ -23,7 +30,7 @@ open class BaseActivity : AppCompatActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var toolbar: MaterialToolbar
 
-    fun setupDrawer(title: String, layoutResId: Int){
+    fun setupDrawer(title: String, layoutResId: Int) {
         // Cargar layout base
         super.setContentView(R.layout.layout_drawer_base)
 
@@ -45,12 +52,63 @@ open class BaseActivity : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
+
+        val sharedPreferences =
+            getSharedPreferences("session", MODE_PRIVATE)
+
+        val userId =
+            sharedPreferences.getInt("user_id", -1)
+
+        val database = Firebase.database.reference
+
+        val dynamicGroupsMap = mutableMapOf<Int, String>()
+
+        val myRef = database.child("grupos")
+
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var index = 0
+
+                navigationView.menu.removeGroup(5)
+                dynamicGroupsMap.clear()
+
+                for (groups in snapshot.children) {
+                    val groupMembers = mutableListOf<String>()
+                    for (member in groups.child("members").children){
+                        val memberId = member.getValue<String>()
+                        if (memberId != null){
+                            groupMembers.add(memberId)
+                        }
+                    }
+                    val members = groups.child("members").value as? List<String> ?: emptyList()
+
+                    if (groupMembers.contains(userId.toString())) {
+                        val groupName = groups.child("name").getValue<String>()
+                        val groupId = groups.child("id").getValue<String>()
+
+                        val newItem = navigationView.menu.add(5, index, 6, groupName)
+
+                        newItem.setIcon(R.drawable.baseline_category_24)
+
+                        dynamicGroupsMap[index] = groupId.toString()
+
+                        index++
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@BaseActivity, "Fallo Firebase: ${error.message}", Toast.LENGTH_LONG).show()
+            }
+
+        })
+
         // Navegación
         navigationView.setNavigationItemSelectedListener { item ->
 
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.nav_home -> {
-                    if(javaClass != MainActivity::class.java){
+                    if (javaClass != MainActivity::class.java) {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -58,7 +116,7 @@ open class BaseActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_movements -> {
-                    if(javaClass != MovementsActivity::class.java){
+                    if (javaClass != MovementsActivity::class.java) {
                         val intent = Intent(this, MovementsActivity::class.java)
                         startActivity(intent)
                         //finish()
@@ -66,7 +124,7 @@ open class BaseActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_categories -> {
-                    if(javaClass != ReportByCategoriesActivity::class.java){
+                    if (javaClass != ReportByCategoriesActivity::class.java) {
                         val intent = Intent(this, ReportByCategoriesActivity::class.java)
                         startActivity(intent)
                         //finish()
@@ -74,13 +132,42 @@ open class BaseActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_about -> {
-                    if(javaClass != AboutUsActivity::class.java){
+                    if (javaClass != AboutUsActivity::class.java) {
                         val intent = Intent(this, AboutUsActivity::class.java)
                         startActivity(intent)
                         //finish()
                     }
                 }
+
+                R.id.nav_createGroup -> {
+                    if (javaClass != CreateGroupActivity::class.java) {
+                        val intent = Intent(this, CreateGroupActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                R.id.nav_joinGroup -> {
+                    if (javaClass != JoinGroupActivity::class.java) {
+                        val intent = Intent(this, JoinGroupActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                else -> {
+                    if (item.groupId == 5) {
+                        val groupId = dynamicGroupsMap[item.itemId]
+
+                        if (groupId != null) {
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("groupId", groupId)
+                            startActivity(intent)
+                        }
+                    }
+                }
             }
+
 
             drawerLayout.closeDrawer(GravityCompat.START)
 
@@ -88,7 +175,7 @@ open class BaseActivity : AppCompatActivity() {
         }
 
         onBackPressedDispatcher.addCallback(this) {
-            if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START)
             } else {
                 isEnabled = false
@@ -102,12 +189,6 @@ open class BaseActivity : AppCompatActivity() {
                 override fun onCreate(db: SupportSQLiteDatabase) {}
             })
             .build()
-
-        val sharedPreferences =
-            getSharedPreferences("session", MODE_PRIVATE)
-
-        val userId =
-            sharedPreferences.getInt("user_id", -1)
 
         val user =
             db.userDao().getUser(userId)
@@ -142,7 +223,7 @@ open class BaseActivity : AppCompatActivity() {
         val userEmail =
             headerView.findViewById<TextView>(R.id.user_email)
 
-        val avatarResource = when(user.avatar) {
+        val avatarResource = when (user.avatar) {
 
             1 -> R.drawable.avatar_1
             2 -> R.drawable.avatar_2
@@ -168,7 +249,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun setSelectedItem(itemId: Int){
+    fun setSelectedItem(itemId: Int) {
         navigationView.setCheckedItem(itemId)
     }
 }
