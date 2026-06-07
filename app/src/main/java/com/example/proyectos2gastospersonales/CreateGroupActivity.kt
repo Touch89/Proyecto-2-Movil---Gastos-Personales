@@ -51,9 +51,9 @@ class CreateGroupActivity : AppCompatActivity() {
 
         val database = Firebase.database.reference
 
-        fun writeNewGroup(groupName: String, desc: String) {
+        fun createGroup(groupName: String, desc: String) {
             var groupDesc = desc
-            var membersList = listOf(userId.toString())
+            val membersList = listOf(userId.toString())
 
             if (groupDesc.isEmpty())
                 groupDesc = "Sin descripción"
@@ -62,6 +62,7 @@ class CreateGroupActivity : AppCompatActivity() {
             val group = Group(groupId, groupName, groupDesc, 0.0, membersList, emptyList())
 
             database.child("grupos").child(groupId).setValue(group)
+            Toast.makeText(this, "Grupo creado exitosamente", Toast.LENGTH_SHORT).show()
         }
 
         backButton = findViewById(R.id.CGback_button)
@@ -72,8 +73,6 @@ class CreateGroupActivity : AppCompatActivity() {
         createGroupButton = findViewById(R.id.createGroup_button)
 
         backButton.setOnClickListener { _ ->
-            //val intent = Intent(this, LoginActivity::class.java)
-            //startActivity(intent)
             finish()
         }
 
@@ -94,11 +93,9 @@ class CreateGroupActivity : AppCompatActivity() {
                     "ERROR: Revisa los datos", Toast.LENGTH_SHORT
                 ).show()
             } else {
-                writeNewGroup(name, desc)
+                createGroup(name, desc)
                 groupNameInput.text?.clear()
                 groupDescInput.text?.clear()
-
-                Toast.makeText(this, "Grupo creado exitosamente", Toast.LENGTH_SHORT).show()
             }
         }
     }

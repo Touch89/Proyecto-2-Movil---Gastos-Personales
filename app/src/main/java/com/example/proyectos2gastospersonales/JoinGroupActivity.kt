@@ -42,20 +42,25 @@ class JoinGroupActivity : AppCompatActivity() {
 
         fun joinGroup(groupRef: String) {
             database.child("grupos").child(groupRef).get().addOnSuccessListener { snapshot ->
-                if (snapshot.exists()){
-                    val groupMembers= mutableListOf<String>()
+                if (snapshot.exists()) {
+                    val groupMembers = mutableListOf<String>()
                     for (member in snapshot.child("members").children) {
                         groupMembers.add(member.value.toString())
                     }
-                    if (groupMembers.contains(userId.toString())){
+                    if (groupMembers.contains(userId.toString())) {
                         Toast.makeText(this, "Ya eres miembro del grupo", Toast.LENGTH_SHORT).show()
-                    }
-                    else {
+                    } else {
                         groupMembers.add(userId.toString())
-                        database.child("grupos").child(groupRef).child("members").setValue(groupMembers)
-                        Toast.makeText(this, "Grupo agregado correctamente", Toast.LENGTH_SHORT).show()
+                        database.child("grupos").child(groupRef).child("members")
+                            .setValue(groupMembers)
+                        Toast.makeText(this, "Grupo agregado correctamente", Toast.LENGTH_SHORT)
+                            .show()
                         finish()
                     }
+                } else {
+                    Toast.makeText(this, "El código del grupo no es válido", Toast.LENGTH_SHORT)
+                        .show()
+
                 }
             }
         }

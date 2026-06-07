@@ -5,7 +5,8 @@
 
     <group
         android:id="@+id/group_1"
-        android:checkableBehavior="single">
+        android:checkableBehavior="single"
+        android:orderInCategory="1">
 
         <item
             android:id="@+id/nav_home"
@@ -26,7 +27,8 @@
 
     <group
         android:id="@+id/group_2"
-        android:checkableBehavior="single">
+        android:checkableBehavior="single"
+        android:orderInCategory="2">
 
         <item
             android:id="@+id/nav_categories"
@@ -37,23 +39,25 @@
 
     <group
         android:id="@+id/group_4"
-        android:checkableBehavior="single">
+        android:checkableBehavior="single"
+        android:orderInCategory="3">
 
         <item
             android:id="@+id/nav_createGroup"
-            android:icon="@drawable/baseline_category_24"
+            android:icon="@drawable/baseline_group_add_24"
             android:title="Crear Grupo" />
 
         <item
             android:id="@+id/nav_joinGroup"
-            android:icon="@drawable/baseline_category_24"
+            android:icon="@drawable/baseline_groups_24"
             android:title="Unirse a Grupo" />
 
     </group>
 
     <group
         android:id="@+id/group_3"
-        android:checkableBehavior="single">
+        android:checkableBehavior="single"
+        android:orderInCategory="5">
 
         <item
             android:id="@+id/nav_help"

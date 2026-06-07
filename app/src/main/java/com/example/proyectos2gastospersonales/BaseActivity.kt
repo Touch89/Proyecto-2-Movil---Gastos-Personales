@@ -56,8 +56,7 @@ open class BaseActivity : AppCompatActivity() {
         val sharedPreferences =
             getSharedPreferences("session", MODE_PRIVATE)
 
-        val userId =
-            sharedPreferences.getInt("user_id", -1)
+        val userId = sharedPreferences.getInt("user_id", -1)
 
         val database = Firebase.database.reference
 
@@ -74,21 +73,19 @@ open class BaseActivity : AppCompatActivity() {
 
                 for (groups in snapshot.children) {
                     val groupMembers = mutableListOf<String>()
-                    for (member in groups.child("members").children){
+                    for (member in groups.child("members").children) {
                         val memberId = member.getValue<String>()
-                        if (memberId != null){
+                        if (memberId != null) {
                             groupMembers.add(memberId)
                         }
                     }
-                    val members = groups.child("members").value as? List<String> ?: emptyList()
-
                     if (groupMembers.contains(userId.toString())) {
                         val groupName = groups.child("name").getValue<String>()
                         val groupId = groups.child("id").getValue<String>()
 
-                        val newItem = navigationView.menu.add(5, index, 6, groupName)
+                        val newItem = navigationView.menu.add(5, index, 4, groupName)
 
-                        newItem.setIcon(R.drawable.baseline_category_24)
+                        newItem.setIcon(R.drawable.baseline_group_24)
 
                         dynamicGroupsMap[index] = groupId.toString()
 
@@ -98,7 +95,11 @@ open class BaseActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@BaseActivity, "Fallo Firebase: ${error.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@BaseActivity,
+                    "Fallo Firebase: ${error.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
         })
@@ -160,7 +161,10 @@ open class BaseActivity : AppCompatActivity() {
                         val groupId = dynamicGroupsMap[item.itemId]
 
                         if (groupId != null) {
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(
+                                this,
+                                MainActivity::class.java
+                            ) //Acá va la actividad del grupo, en vez del main
                             intent.putExtra("groupId", groupId)
                             startActivity(intent)
                         }
