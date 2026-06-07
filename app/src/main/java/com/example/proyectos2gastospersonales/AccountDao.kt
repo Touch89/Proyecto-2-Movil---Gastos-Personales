@@ -22,6 +22,18 @@ interface AccountDao {
     fun getAccountsFromUser(userId: Int): UserWithAccounts?
 
     @Transaction
+    @Query("SELECT * FROM accounts WHERE id = :accountId AND user_id = :userId")
+    suspend fun getAccount(accountId: Int, userId: Int): Account
+
+    @Transaction
     @Delete
     suspend fun deleteAccount(account: Account)
+
+    @Transaction
+    @Insert
+    suspend fun insertAccount(account: Account)
+
+    @Transaction
+    @Update
+    suspend fun updateAccount(account: Account)
 }

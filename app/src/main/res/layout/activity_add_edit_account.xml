@@ -172,6 +172,15 @@
       </LinearLayout>
     </HorizontalScrollView>
 
+    <Button
+        android:id="@+id/save_changes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/orange"
+        android:text="Guardar"/>
+
   </LinearLayout>
 
 </LinearLayout>
