@@ -32,6 +32,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var avatar3Button: ImageButton
     private lateinit var avatar4Button: ImageButton
 
+    private lateinit var iconButtons: List<ImageButton>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -66,26 +68,24 @@ class RegisterActivity : AppCompatActivity() {
 
         var avatarSelected = 0
 
+        iconButtons = listOf(
+            avatar1Button,
+            avatar2Button,
+            avatar3Button,
+            avatar4Button
+        )
+
+        iconButtons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                selectIcon(index)
+                avatarSelected = index + 1
+            }
+        }
+
         backButton.setOnClickListener { _ ->
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
-        }
-
-        avatar1Button.setOnClickListener { _ ->
-            avatarSelected = 1
-        }
-
-        avatar2Button.setOnClickListener { _ ->
-            avatarSelected = 2
-        }
-
-        avatar3Button.setOnClickListener { _ ->
-            avatarSelected = 3
-        }
-
-        avatar4Button.setOnClickListener { _ ->
-            avatarSelected = 4
         }
 
         registerButton.setOnClickListener { _ ->
@@ -150,5 +150,11 @@ class RegisterActivity : AppCompatActivity() {
 
     fun String.isValidEmail(): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    }
+
+    fun selectIcon(index: Int) {
+        iconButtons.forEach { it.isSelected = false }
+
+        iconButtons[index].isSelected = true
     }
 }

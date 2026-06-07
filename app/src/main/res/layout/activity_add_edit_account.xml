@@ -40,26 +40,137 @@
   </LinearLayout>
 
   <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <TextView
-      android:layout_width="wrap_content"
+      android:id="@+id/account_name"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="En Construcción..."
-      android:textColor="@color/black"
-      android:textSize="20sp"
-      android:textStyle="bold" />
+      android:gravity="center"
+      android:orientation="vertical"
+      android:paddingVertical="24dp">
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="12dp"
-      android:text="Próximamente en versión PRO."
-      android:textColor="@color/black"
-      android:textSize="14sp" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/account_desc_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp">
+
+      <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/account_name_input"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          android:textColor="@color/black"
+          android:hint="Nombre de la cuenta" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/account_name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp">
+
+      <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/account_desc_input"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textColor="@color/black"
+          android:hint="Descripción de la cuenta" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="32dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/account_img_1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_account_balance_wallet_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_credit_card_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_payment_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_4"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_account_balance_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_5"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_savings_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_6"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_local_activity_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_7"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_phone_android_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_8"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_trending_up_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_9"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_lock_24"
+            android:background="@drawable/button_background_selection"/>
+
+        <ImageButton
+            android:id="@+id/account_img_10"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/baseline_monetization_on_24"
+            android:background="@drawable/button_background_selection"/>
+
+      </LinearLayout>
+    </HorizontalScrollView>
 
   </LinearLayout>
 
