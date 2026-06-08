@@ -35,7 +35,6 @@ open class BaseActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.nav_view)
         toolbar = findViewById(R.id.topAppBar)
 
-        navigationView.menu.findItem(R.id.nav_accounts).isEnabled = false
         navigationView.menu.findItem(R.id.nav_help).isEnabled = false
 
         toolbar.title = title
@@ -60,6 +59,14 @@ open class BaseActivity : AppCompatActivity() {
                 R.id.nav_movements -> {
                     if(javaClass != MovementsActivity::class.java){
                         val intent = Intent(this, MovementsActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                R.id.nav_accounts -> {
+                    if(javaClass != AccountsActivity::class.java){
+                        val intent = Intent(this, AccountsActivity::class.java)
                         startActivity(intent)
                         //finish()
                     }

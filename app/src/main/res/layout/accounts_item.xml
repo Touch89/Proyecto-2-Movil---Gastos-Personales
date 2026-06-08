@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/image_account"
+        android:layout_width="74dp"
+        android:layout_height="74dp"
+        android:contentDescription="Imágen de cuenta"
+        android:src="@drawable/avatar_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/account_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:textColor="@color/orange"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/image_account"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Nombre de cuenta" />
+
+    <TextView
+        android:id="@+id/account_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_account"
+        app:layout_constraintTop_toBottomOf="@id/account_name"
+        tools:text="Lorem ipsum dolor sit amet consectetur adipiscing elit, curae condimentum vestibulum cum nunc tristique dapibus erat, semper pharetra leo placerat lectus parturient. Cursus cras maecenas fringilla class, nascetur enim bibendum." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
