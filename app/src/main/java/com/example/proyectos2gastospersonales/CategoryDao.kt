@@ -73,18 +73,23 @@ interface CategoryDao {
         year: String
     ): List<CategoryData>
     
+    // Inserta una nueva categoría en la tabla categories
     @Insert
     fun insert(category: Category)
 
+    // Actualiza el nombre e ícono de una categoría existente, identificándola por su id
     @Update
     fun update(category: Category)
 
+    // Elimina una categoría de la tabla categories
     @Delete
     fun delete(category: Category)
 
+    // Retorna todas las categorías del usuario ordenadas descendentemente por nombre (pantalla #11)
     @Query("SELECT * FROM categories WHERE user_id = :userId ORDER BY name DESC")
     fun getCategoriesByUser(userId: Int): List<Category>
 
+    // Cuenta los movimientos asociados a una categoría; si devuelve 0 se permite eliminarla
     @Query("SELECT COUNT(*) FROM movements WHERE category_id = :categoryId")
     fun getMovementCount(categoryId: Int): Int
 }

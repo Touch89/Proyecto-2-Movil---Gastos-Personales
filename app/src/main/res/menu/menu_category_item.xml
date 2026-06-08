@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Abre el diálogo #12 en modo Modificar con los datos de la categoría seleccionada -->
     <item
         android:id="@+id/action_modify_category"
         android:title="Modificar" />
 
+    <!-- Solo visible si la categoría no tiene movimientos asociados (controlado desde el Adapter) -->
     <item
         android:id="@+id/action_delete_category"
         android:title="Eliminar" />

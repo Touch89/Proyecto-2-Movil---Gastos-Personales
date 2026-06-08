@@ -13,6 +13,7 @@
     android:background="@color/reallyLightGrey"
     android:orientation="vertical">
 
+    <!-- Barra de navegación naranja con botón de regreso, título y botón para agregar -->
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
 
     </LinearLayout>
 
+    <!-- Lista de categorías ordenadas descendentemente por nombre -->
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/rv_categories"
       android:layout_width="match_parent"

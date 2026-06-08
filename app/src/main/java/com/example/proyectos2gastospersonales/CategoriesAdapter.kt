@@ -8,25 +8,31 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// Adapter para el RecyclerView de la pantalla #11 (Categorías)
+// Recibe la lista de categorías y un listener que delega las acciones al Activity
 class CategoriesAdapter(
     private val categories: MutableList<Category>,
     private val listener: CategoryActionListener
 ) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
+    // Interfaz que CategoriesActivity implementa para manejar las acciones del menú de cada ítem
     interface CategoryActionListener {
         fun onModify(category: Category)
         fun onDelete(category: Category)
         fun hasMovements(categoryId: Int): Boolean
     }
 
+    // ViewHolder que representa un ítem de la lista: ícono y nombre de la categoría
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         private val icon: ImageView = view.findViewById(R.id.item_category_icon)
         private val name: TextView = view.findViewById(R.id.item_category_name)
         private lateinit var category: Category
 
+        // Enlaza los datos de una categoría con las vistas del ítem
         fun bind(category: Category) {
             this.category = category
             name.text = category.name
+            // Mapea el código numérico del ícono (201-210) al drawable correspondiente
             icon.setImageResource(
                 when (category.icon) {
                     201 -> R.drawable.baseline_shopping_cart_24
@@ -45,6 +51,7 @@ class CategoriesAdapter(
             view.setOnClickListener { showPopupMenu(view, category) }
         }
 
+        // Muestra el PopupMenu al tocar el ítem; oculta "Eliminar" si la categoría tiene movimientos
         private fun showPopupMenu(anchor: View, category: Category) {
             val popup = PopupMenu(anchor.context, anchor)
             popup.menuInflater.inflate(R.menu.menu_category_item, popup.menu)
@@ -63,17 +70,21 @@ class CategoriesAdapter(
         }
     }
 
+    // Infla el layout de cada ítem de la lista
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.category_item, parent, false)
         return ViewHolder(view)
     }
 
+    // Enlaza el ViewHolder con la categoría en la posición indicada
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(categories[position])
 
+    // Devuelve el total de categorías en la lista
     override fun getItemCount(): Int = categories.size
 
+    // Reemplaza la lista actual con una nueva y notifica al RecyclerView para que se redibuje
     fun updateCategories(updatedCategories: List<Category>) {
         categories.clear()
         categories.addAll(updatedCategories)

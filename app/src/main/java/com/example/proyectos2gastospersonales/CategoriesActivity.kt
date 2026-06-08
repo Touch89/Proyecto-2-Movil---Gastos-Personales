@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 
+// Pantalla #11: lista de categorías del usuario con opciones de agregar, modificar y eliminar
 class CategoriesActivity : AppCompatActivity(), CategoriesAdapter.CategoryActionListener {
 
     val db by lazy { AppDatabase.getDatabase(this) }
@@ -19,6 +20,7 @@ class CategoriesActivity : AppCompatActivity(), CategoriesAdapter.CategoryAction
     private var categoriesList: MutableList<Category> = mutableListOf()
     private var idUser: Int = -1
 
+    // Inicializa la pantalla: obtiene el usuario, configura el RecyclerView y los botones
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,27 +43,32 @@ class CategoriesActivity : AppCompatActivity(), CategoriesAdapter.CategoryAction
 
         findViewById<ImageButton>(R.id.backButton).setOnClickListener { finish() }
 
+        // El botón "+" abre el diálogo en modo Agregar (category = null)
         findViewById<ImageButton>(R.id.addButton).setOnClickListener {
             AddModifyCategoryDialog(null, idUser) { loadCategories() }
                 .show(supportFragmentManager, "AddModifyCategory")
         }
     }
 
+    // Recarga la lista cada vez que la pantalla vuelve al frente (ej. al cerrar el diálogo)
     override fun onResume() {
         super.onResume()
         loadCategories()
     }
 
+    // Consulta la base de datos y actualiza el RecyclerView con las categorías del usuario
     private fun loadCategories() {
         val updated = db.categoryDao().getCategoriesByUser(idUser)
         categoriesAdapter.updateCategories(updated)
     }
 
+    // Abre el diálogo en modo Modificar, precargando los datos de la categoría seleccionada
     override fun onModify(category: Category) {
         AddModifyCategoryDialog(category, idUser) { loadCategories() }
             .show(supportFragmentManager, "AddModifyCategory")
     }
 
+    // Elimina la categoría, actualiza la lista y muestra un Snackbar con opción de deshacer
     override fun onDelete(category: Category) {
         db.categoryDao().delete(category)
         loadCategories()
@@ -73,6 +80,7 @@ class CategoriesActivity : AppCompatActivity(), CategoriesAdapter.CategoryAction
             .show()
     }
 
+    // Verifica si la categoría tiene movimientos; el Adapter lo usa para ocultar "Eliminar"
     override fun hasMovements(categoryId: Int): Boolean {
         return db.categoryDao().getMovementCount(categoryId) > 0
     }

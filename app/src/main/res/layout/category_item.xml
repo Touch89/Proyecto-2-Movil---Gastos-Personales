@@ -10,6 +10,7 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
+    <!-- Ícono de la categoría; el Adapter mapea el código numérico (201-210) al drawable -->
     <ImageView
         android:id="@+id/item_category_icon"
         android:layout_width="40dp"
@@ -20,6 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:src="@drawable/shopping_cart" />
 
+    <!-- Nombre de la categoría; ocupa el espacio restante a la derecha del ícono -->
     <TextView
         android:id="@+id/item_category_name"
         android:layout_width="0dp"

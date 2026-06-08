@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="20dp">
 
+    <!-- Sección de nombre: etiqueta y campo de texto editable -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
         android:textColor="@color/black"
         android:textSize="16sp" />
 
+    <!-- Sección de ícono: etiqueta y cuadrícula de 10 íconos (2 filas × 5 columnas) -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,6 +117,7 @@
 
     </GridLayout>
 
+    <!-- Botones de acción alineados a la derecha: Cancelar cierra sin guardar, Guardar valida y persiste -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
