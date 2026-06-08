@@ -68,13 +68,29 @@ open class BaseActivity : AppCompatActivity() {
                     if(javaClass != AccountsActivity::class.java){
                         val intent = Intent(this, AccountsActivity::class.java)
                         startActivity(intent)
+                        finish()
+                    }
+                }
+
+                R.id.nav_accounts-> {
+                    if(javaClass != AccountsActivity::class.java){
+                        val intent = Intent(this, AccountsActivity::class.java)
+                        startActivity(intent)
                         //finish()
                     }
                 }
 
                 R.id.nav_categories -> {
-                    if(javaClass != ReportByCategoriesActivity::class.java){
-                        val intent = Intent(this, ReportByCategoriesActivity::class.java)
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
+                        startActivity(intent)
+                        //finish()
+                    }
+                }
+
+                R.id.nav_help -> {
+                    if(javaClass != CategoriesActivity::class.java){
+                        val intent = Intent(this, CategoriesActivity::class.java)
                         startActivity(intent)
                         //finish()
                     }

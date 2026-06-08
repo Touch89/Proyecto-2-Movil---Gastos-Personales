@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/reallyLightGrey"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Sección de nombre: etiqueta y campo de texto editable -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_category_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:inputType="text"
+        android:padding="10dp"
+        android:hint="Nombre de la categoría"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <!-- Sección de ícono: etiqueta y cuadrícula de 10 íconos (2 filas × 5 columnas) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ícono"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:columnCount="5"
+        android:rowCount="2">
+
+        <ImageButton android:id="@+id/icon_btn_201"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_shopping_cart_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_202"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_directions_car_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_203"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_restaurant_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_204"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_home_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_205"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_computer_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_206"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_pets_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_207"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_school_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_208"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_medical_services_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_209"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_shopping_bag_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+        <ImageButton android:id="@+id/icon_btn_210"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:background="@color/white"
+            android:src="@drawable/baseline_work_24"
+            android:padding="8dp" android:layout_margin="4dp" />
+
+    </GridLayout>
+
+    <!-- Botones de acción alineados a la derecha: Cancelar cierra sin guardar, Guardar valida y persiste -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/grey"
+            android:text="Cancelar"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange"
+            android:text="Guardar"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>
