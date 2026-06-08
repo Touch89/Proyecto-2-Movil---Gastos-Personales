@@ -72,4 +72,19 @@ interface CategoryDao {
         month: String,
         year: String
     ): List<CategoryData>
+    
+    @Insert
+    fun insert(category: Category)
+
+    @Update
+    fun update(category: Category)
+
+    @Delete
+    fun delete(category: Category)
+
+    @Query("SELECT * FROM categories WHERE user_id = :userId ORDER BY name DESC")
+    fun getCategoriesByUser(userId: Int): List<Category>
+
+    @Query("SELECT COUNT(*) FROM movements WHERE category_id = :categoryId")
+    fun getMovementCount(categoryId: Int): Int
 }
