@@ -130,7 +130,8 @@
                 android:layout_height="68dp"
                 android:src="@drawable/avatar_1"
                 android:scaleType="fitCenter"
-                android:backgroundTint="#00000000"/>
+                android:padding="6dp"
+                android:background="@drawable/button_background_selection"/>
 
             <ImageButton
                 android:id="@+id/avatar_2"
@@ -138,8 +139,8 @@
                 android:layout_height="68dp"
                 android:src="@drawable/avatar_2"
                 android:scaleType="fitCenter"
-                android:backgroundTint="#00000000"
-                />
+                android:padding="6dp"
+                android:background="@drawable/button_background_selection" />
 
             <ImageButton
                 android:id="@+id/avatar_3"
@@ -147,7 +148,8 @@
                 android:layout_height="68dp"
                 android:src="@drawable/avatar_3"
                 android:scaleType="fitCenter"
-                android:backgroundTint="#00000000"/>
+                android:padding="6dp"
+                android:background="@drawable/button_background_selection"/>
 
             <ImageButton
                 android:id="@+id/avatar_4"
@@ -155,7 +157,8 @@
                 android:layout_height="68dp"
                 android:src="@drawable/avatar_4"
                 android:scaleType="fitCenter"
-                android:backgroundTint="#00000000"/>
+                android:padding="6dp"
+                android:background="@drawable/button_background_selection"/>
 
         </LinearLayout>
 

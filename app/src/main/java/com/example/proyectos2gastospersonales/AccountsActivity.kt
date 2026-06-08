@@ -129,6 +129,7 @@ class AccountsAdapter (var accounts: MutableList<Account>, val activity: AppComp
 class AccountsActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
 
     private lateinit var appBarMenu: ImageButton
+    private lateinit var backButton: ImageButton
     private lateinit var rv: RecyclerView
     private lateinit var emptyViewAlert: TextView
     private lateinit var accountAdapter: AccountsAdapter
@@ -147,13 +148,15 @@ class AccountsActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
             insets
         }
 
-        findViewById<ImageButton>(R.id.backButton).setOnClickListener { finish() }
+        setupDrawer("Cuentas", R.layout.activity_accounts)
+
+        backButton = findViewById(R.id.backButton)
 
         appBarMenu = findViewById(R.id.appbar_menu_accounts)
 
-        appBarMenu.setOnClickListener { view -> showMenu(view) }
+        backButton.setOnClickListener { finish() }
 
-        setupDrawer("Cuentas", R.layout.activity_accounts)
+        appBarMenu.setOnClickListener { view -> showMenu(view) }
 
         rv = findViewById(R.id.accounts_rv)
         rv.layoutManager = LinearLayoutManager(this)
@@ -193,7 +196,7 @@ class AccountsActivity : BaseActivity(), PopupMenu.OnMenuItemClickListener {
         val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)
         idUser = sharedPreferences.getInt("user_id", -1)
 
-        val result = db.accountDao().getAccountsFromUser(userId = 1)
+        val result = db.accountDao().getAccountsFromUser(userId = idUser)
         val cuentas = result?.accounts ?: emptyList()
 
         accountsList.clear()
