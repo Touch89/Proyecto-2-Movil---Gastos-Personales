@@ -3,6 +3,7 @@ package com.example.proyectos2gastospersonales
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
@@ -27,7 +28,7 @@ class AddEditAccountActivity : AppCompatActivity() {
     var idUser = 1
     var accountId = -1
 
-    private var selectIconId: Int = 101
+    private var selectIconId: Int = 100
     private var isEditMode = false
 
 
@@ -75,6 +76,8 @@ class AddEditAccountActivity : AppCompatActivity() {
         } else {
             selectIcon(0)
         }
+
+        saveButton.setOnClickListener { createUpdateAccount() }
     }
 
     private fun selectIcon(index: Int){
@@ -95,6 +98,59 @@ class AddEditAccountActivity : AppCompatActivity() {
             val iconindex = account.icon - 101
             if (iconindex in iconButtons.indices) {
                 selectIcon(iconindex)
+            }
+        }
+    }
+
+    private fun createUpdateAccount(){
+        lifecycleScope.launch {
+            val name = nameInput.text.toString()
+            val desc = descInput.text.toString()
+
+            var accountValid = true
+
+            if (name.isEmpty() || name.isBlank()){
+                nameLayout.error = "Este campo es obligatorio"
+                accountValid = false
+            }
+
+            if (desc.isEmpty() || desc.isBlank()){
+                descLayout.error = "Este campo es obligatorio"
+                accountValid = false
+            }
+
+            if (selectIconId == 100) {
+                Toast.makeText(this@AddEditAccountActivity, "Falta seleccionar un icono para la cuenta", Toast.LENGTH_SHORT).show()
+                accountValid = false
+            }
+
+            if(accountValid){
+                withContext(Dispatchers.IO){
+                    if (isEditMode){
+                        val accountToUpdate = Account(
+                            id = accountId,
+                            name = name,
+                            description = desc,
+                            icon = selectIconId,
+                            userId = idUser
+                        )
+                        db.accountDao().updateAccount(accountToUpdate)
+                    } else {
+                        val newAccount = Account(
+                            name = name,
+                            description = desc,
+                            icon = selectIconId,
+                            userId = idUser
+                        )
+                        db.accountDao().insertAccount(newAccount)
+                    }
+                }
+
+                withContext(Dispatchers.Main){
+                    Toast.makeText(this@AddEditAccountActivity,
+                        "Cuenta guardada con éxito", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
             }
         }
     }
