@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.devtools.ksp")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -37,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.firebase.database)
     val room_version = "2.8.4"
     implementation("androidx.room:room-runtime:${room_version}")
     ksp("androidx.room:room-compiler:${room_version}")
