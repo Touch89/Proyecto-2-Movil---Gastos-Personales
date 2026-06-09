@@ -60,7 +60,7 @@ class AddMovementActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        setupDrawer("Grupo", R.layout.activity_movements)
         //setupDrawer("Movimientos", R.layout.activity_add_movement)
 
         val sharedPreferences = getSharedPreferences("session", MODE_PRIVATE)

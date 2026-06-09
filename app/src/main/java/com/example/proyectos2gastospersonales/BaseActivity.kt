@@ -186,8 +186,8 @@ open class BaseActivity : AppCompatActivity() {
                         if (groupId != null) {
                             val intent = Intent(
                                 this,
-                                MainActivity::class.java
-                            ) //Acá va la actividad del grupo, en vez del main
+                                GroupInfoActivity::class.java
+                            )
                             intent.putExtra("groupId", groupId)
                             startActivity(intent)
                         }
